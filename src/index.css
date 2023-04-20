@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+         @font-face{
+        font-family:"aAbstractGroovy";
+        src:url("/src/assets/fonts/aAbstractGroovy.ttf")
+        }
+        @font-face{
+            font-family:"Baloo-Regular";
+           src:url("/src/assets/fonts/Baloo-Regular.ttf")
+           }
+           @font-face{
+            font-family:"Quicksand";
+           src:url("/src/assets/fonts/Quicksand.ttf")
+           }
+@layer components{
+
+    .text-outline{
+        text-shadow: rgb(1, 1, 1) 2px 0px 0px, rgb(1, 1, 1) 1.75517px 0.958851px 0px, rgb(1, 1, 1) 1.0806px 1.68294px 0px, rgb(1, 1, 1) 0.141474px 1.99499px 0px, rgb(1, 1, 1) -0.832294px 1.81859px 0px, rgb(1, 1, 1) -1.60229px 1.19694px 0px, rgb(1, 1, 1) -1.97998px 0.28224px 0px, rgb(1, 1, 1) -1.87291px -0.701566px 0px, rgb(1, 1, 1) -1.30729px -1.5136px 0px, rgb(1, 1, 1) -0.421592px -1.95506px 0px, rgb(1, 1, 1) 0.567324px -1.91785px 0px, rgb(1, 1, 1) 1.41734px -1.41108px 0px, rgb(1, 1, 1) 1.92034px -0.558831px 0px;
+    }
+    .text-outline-none{
+        text-shadow: 0 0 0 ;
+    }
+    .button{
+        @apply
+        cursor-pointer select-none px-4 py-1 
+        border border-black rounded-full 
+        hover-anim  
+        text-outline text-center
+    }
+
+    .hover-anim{
+        @apply
+        hover-shadow hover:-translate-x-0.5 hover:-translate-y-0.5 cubic-bezier box-border
+    }
+    .hover-shadow:hover{
+        -webkit-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.75);
+    box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.75);
+      }
+      .hover-shadow-full{
+        -webkit-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.75);
+    box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.75);
+
+    --tw-translate-y: -0.125rem/* -2px */;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    --tw-translate-x: -0.125rem/* -2px */;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+      }
+    .cubic-bezier{
+        transition : all .3s cubic-bezier(.5,2.5,.7,.7);
+    }
+    .header{
+        @apply
+        text-lg transition-all w-full h-16 z-[999] 
+        md:w-4/5 md:h-24 
+        !fixed bottom-0 left-0 md:!relative 
+        bg-white 
+        flex flex-row items-center justify-evenly gap-4 
+        border-t md:border border-black md:rounded-full 
+        mx-auto md:my-16 
+    }
+    .darkModeButton{
+
+        @apply
+        -m-4 hover:m-0 rounded-full w-16 h-16 transition-all 
+        hover:bg-zinc-900 hover:scale-150
+        dark:hover:bg-zinc-100
+        fixed top-0 right-0
+        dark:bg-amber-400
+        bg-zinc-600
+        shadow-lg dark:shadow-amber-400 shadow-zinc-900
+        rotate-45
+
+        /*
+         import { ref } from "@vue/reactivity"
+        const counter = ref(1)
+        const toggleDark=()=>{
+            counter.value++
+            if ( counter.value%2==0)
+            document.querySelector("html").setAttribute("class","dark")
+            else
+            document.querySelector("html").setAttribute("class","")
+        } 
+        */
+    }
+}
+
+
+/* .bg-\[--bgcolor\] {
+    background-color: var(--bgcolor);
+} */
