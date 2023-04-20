@@ -45,13 +45,13 @@
                             <div id="archives" class=" w-full select-none  overflow-scroll overflow-x-hidden">
                                     <ul class="flex flex-row shrink-0 flex-wrap gap-2 md:gap-0 items-center justify-center border-t pt-4 md:pt-0 border-black">
                                         <li><img width="32" src="/src/assets/badges/icons8-warranty-96.png" alt=""></li>
-                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96 (1).png" alt=""></li>
-                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96 (2).png" alt=""></li>
-                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96 (3).png" alt=""></li>
-                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96 (4).png" alt=""></li>
-                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96 (5).png" alt=""></li>
-                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96 (6).png" alt=""></li>
-                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96 (7).png" alt=""></li>
+                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96(1).png" alt=""></li>
+                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96(2).png" alt=""></li>
+                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96(3).png" alt=""></li>
+                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96(4).png" alt=""></li>
+                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96(5).png" alt=""></li>
+                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96(6).png" alt=""></li>
+                                        <li><img width="32" src="/src/assets/badges/icons8-warranty-96(7).png" alt=""></li>
 
                                     </ul>
                             </div>

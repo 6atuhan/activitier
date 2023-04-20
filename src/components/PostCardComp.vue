@@ -13,8 +13,8 @@
     </div>
     <div id="bilgiler" :class="store.state.boy ? '!bg-[#51A5DB]':'!bg-[#E6686F]'"  class="bg-[#51A5DB] h-[292px] w-[222px] md:w-[292px] md:h-[174px] rounded-xl border border-black self-center flex flex-col gap-2 py-2 hover-anim">
         <div id="profile" class=" flex w-full gap-2 items-center justify-start px-2 ">
-            <div class="bg-white h-12 w-12 rounded-md border border-black text-center text-[36px]  overflow-hidden hover-shadow hover:-translate-x-0.5 hover:-translate-y-0.5 box-border cubic-bezier">
-                <img src="/src/assets/ronaldoPP.jpeg" class="object-cover	 h-12 w-12 	" alt="profilePhoto">
+            <div class="bg-white h-12 w-12 rounded-full border border-black text-center text-[36px]  overflow-hidden hover-shadow hover:-translate-x-0.5 hover:-translate-y-0.5 box-border cubic-bezier">
+                <img src="/src/assets/logo-pp.png" class="object-cover	 h-12 w-12 	" alt="profilePhoto">
 
             </div>
             <div class=" font-Baloo-Regular">
