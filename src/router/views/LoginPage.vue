@@ -1,6 +1,6 @@
 <template>
 
-    <div  class="container mx-auto flex overflow-x-hidden  items-center pt-48 md:pt-16 justify-center">
+    <div  class="container mx-auto flex overflow-x-hidden  items-center pt-24 md:pt-16 justify-center">
         <ul class="flex flex-col gap-2" >
 <!-- girişyap kayıtol seçici -->
             <li class="flex flex-row gap-2 items-center justify-center">

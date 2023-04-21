@@ -14,13 +14,13 @@ import store from "/src/store"
 import router from "/src/router"
 import {db} from '/src/firebase'
 import { onMounted } from 'vue';
-import {  onSnapshot ,collection} from "firebase/firestore";
+import {  onSnapshot ,collection, query, orderBy} from "firebase/firestore";
 
 
 onMounted(()=>{
 
-
-onSnapshot(collection(db, "posts"), (querySnapshot) => {                                                                
+const siraliPosts = query (collection(db, "posts"), orderBy("isActive", "desc"));
+onSnapshot(siraliPosts, (querySnapshot) => {                                                                
 	 const veriler = [];                                                                                  
 	 querySnapshot.forEach((doc) => {                                                                    
                                                            
@@ -33,7 +33,10 @@ onSnapshot(collection(db, "posts"), (querySnapshot) => {
         player : doc.data().player,                                                                             
         date : doc.data().date,
         location:doc.data().location,
-        isActive : true,
+        city:doc.data().city,
+        state:doc.data().state,
+        isActive : doc.data().isActive,
+        time:doc.data().time,
         ownerUid:doc.data().ownerUid,
         ownerName:doc.data().ownerName,
         ownerPoint:doc.data().ownerPoint,                                                                             

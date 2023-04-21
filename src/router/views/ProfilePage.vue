@@ -1,5 +1,5 @@
 <template>
-<div v-if="store.state.activeUser != null" class="flex flex-col font-Quicksand py-2 md:flex-row px-2 mt-2 md:mt-0 mb-32" >
+<div v-if="store.state.activeUser != null " class="flex flex-col font-Quicksand py-2 md:flex-row px-2 mt-10 md:mt-0 mb-32" >
 
 <div class="container md:order-1 mx-auto w-full md:w-[768px] items-start justify-center flex flex-row flex-wrap gap-4">
 

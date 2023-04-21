@@ -1,6 +1,6 @@
 <template >
     <add-post-comp></add-post-comp>
-    <div v-if="store.state.activeUser != null" @click="store.state.addPost=true" class="button bg-yellow-500 fixed bottom-36 md:bottom-10 right-4 z-[99999] text-white">
+    <div v-if="store.state.activeUser != null && store.state.addPost==false " @click="store.state.addPost=true" class="button bg-yellow-500 fixed bottom-36 md:bottom-10 right-4 z-[99999] text-white">
         <div class="relative group ">
             Post
             <img class="absolute delay-1000  opacity-0 group-hover:opacity-100 cubic-bezier -top-5  left-0 -scale-50" width="32" src="/src/assets/gifs/dazzle-star.gif" alt="">

@@ -1,17 +1,32 @@
 <template>
-<div v-for="post in posts" :key="post.id"   class=" bg-[#F2E8D5] mb-0 md:mb-4 border border-black rounded-xl h-[400px] w-64 md:h-52 md:w-[480px] p-4 shrink-0 relative flex flex-col md:flex-row gap-2 justify-center items-center ">
+<div v-for="post in posts" :key="post.id" :class="post.isActive ? 'opacity-100' : 'opacity-30 pointer-events-none cursor-not-allowed select-none '"   class=" bg-[#F2E8D5] mb-4 border border-black rounded-xl h-[400px] w-64 md:h-52 md:w-[480px] p-4 shrink-0 relative flex flex-col md:flex-row gap-2 justify-center items-center ">
     <div  class=" font-Quicksand  z-50  button text-white !py-0 bg-blue-100  absolute left-0 -top-3 ml-4 flex items-center justify-center gap-2 ">
         {{ post.selectedGame }}
         <div class="button w-4 h-4 p-0 bg-pink-600 "></div>
         <h3>{{ post.date }}</h3>
 
     </div>
-        <div id="harita" :class="store.state.boy ? '!bg-[#51A5DB]':'!bg-[#E6686F]'" class="bg-[#51A5DB] h-[192px] w-[222px] md:w-[192px] overflow-hidden md:h-[174px]  rounded-xl border border-black self-center flex items-center justify-center flex-col gap-2 py-2 hover-anim">
 
-            <img class="w-full h-full object-cover duration-700 m-0 p-0 hover:scale-150 transition-all" src="/src/assets/google-map.png" alt="">
+    <div id="harita" :class="store.state.boy ? '!bg-[#51A5DB]':'!bg-[#E6686F]'" class="bg-[#51A5DB] h-full w-[222px] md:w-[192px] md:h-[174px] overflow-hidden   rounded-xl border border-black self-center flex items-center justify-start flex-col  box-border border-collapse hover-anim">
 
-    </div>
+            <img class="w-full h-[90%] object-cover  m-0 p-0  transition-all border-b border-black rounded-t-lg " src="/src/assets/google-map.png" alt="">
+            <div class="flex items-center justify-center w-full font-Baloo-Regular text-sm select-none">
+                <p class="text-ellipsis w-1/2 overflow-hidden text-left px-1">
+                    {{ post.city }}
+                </p>
+
+                <p class="text-ellipsis w-1/2 overflow-hidden text-right px-1">
+
+                    {{ post.state }}
+                </p>
+            </div>
+            
+            
+
+        </div>
     <div id="bilgiler" :class="store.state.boy ? '!bg-[#51A5DB]':'!bg-[#E6686F]'"  class="bg-[#51A5DB] h-[292px] w-[222px] md:w-[292px] md:h-[174px] rounded-xl border border-black self-center flex flex-col gap-2 py-2 hover-anim">
+
+        
         <div id="profile" class=" flex w-full gap-2 items-center justify-start px-2 ">
             <div class="bg-white h-12 w-12 rounded-full border border-black text-center text-[36px]  overflow-hidden hover-shadow hover:-translate-x-0.5 hover:-translate-y-0.5 box-border cubic-bezier">
                 <img src="/src/assets/logo-pp.png" class="object-cover	 h-12 w-12 	" alt="profilePhoto">
@@ -61,8 +76,10 @@
 
 </template>
 <script setup>
+
 import router from "/src/router"
 import store from '/src/store';
+
 
 
 defineProps({
