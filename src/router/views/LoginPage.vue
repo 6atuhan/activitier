@@ -155,8 +155,9 @@ import { getAuth, signOut , createUserWithEmailAndPassword,signInWithEmailAndPas
 import {  reactive } from "vue"
 import router from "/src/router"
 import store from "/src/store"
+import { doc, setDoc,getDoc} from "firebase/firestore"; 
+import {db} from "/src/firebase"
 
-import { getDatabase, set , ref,onValue } from "firebase/database";
 
 
 
@@ -355,56 +356,59 @@ const checkEnterForm=(form)=>{
     }, 1500);
 
     if(operation.errors.length == 0){
-        signInWithEmailAndPassword(auth, enterForm.email, enterForm.password)
-  .then((userCredential) => {
+    const auth = getAuth();
+
+    signInWithEmailAndPassword(auth, enterForm.email, enterForm.password)
+    .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
     operation.success=true
+
     setTimeout(() => {
             operation.success=false
-            const db = getDatabase();
-            const auth = getAuth();
+            const docRef = doc(db, "users", user.uid);
+                const docSnap =  getDoc(docRef);
 
-            const userId = auth.currentUser.uid;
-            // aktif kullanıcının realtimedb den bilgilerini çekiyor
-            onValue(ref(db, '/users/' + userId), (snapshot) => {
-                store.state.activeUser=snapshot.val()
+                getDoc(docRef).then(docSnap => {
+                 if (docSnap.exists()) {
+                    store.state.activeUser=docSnap.data()
                 if(store.state.activeUser != null)
-
                 {router.push("/profile")}
-            }, {
-              onlyOnce: true
-            });
+                   console.log("Document data:", docSnap.data());
+                 } else {
+                    console.log("No such document!");
+                 }
+                })
+            
     }, 1500);
-    // ...
   })
   .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-
-    operation.errors.push(errorMessage)
-  });
-
-    }
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      
+      operation.errors.push(errorMessage)
+    });
+    
+}
 }
 
 
 
 
 // FİRESTORE KAYIT OLMA
-const auth = getAuth();
 const createAccount =()=>{
+    const auth = getAuth();
+    
     createUserWithEmailAndPassword(auth, joinForm.email, joinForm.password)
-  .then((userCredential) => {
-    // Signed in 
+    .then((userCredential) => {
+        // Signed in 
+        const userId = auth.currentUser.uid;
     const user = userCredential.user;
-
-
-  writeUserData(user.uid,joinForm)
-operation.success=true
-operation.joinBtn=false
-resetJoinForm()
-router.push("/login")
+    joinToFirestore(userId)
+    operation.success=true
+    operation.joinBtn=false
+    resetJoinForm()
+    router.push("/login")
 
         setTimeout(() => {
             operation.success=false
@@ -419,11 +423,9 @@ router.push("/login")
 
 }
 
-// REALTİMEDATABASE KULLANICI BİLGİLERİ ALMA
-const database = getDatabase();
-const writeUserData=(userId, joinForm)=> {
-  set(ref(database, 'users/' + userId), {
-
+// FİRESTORE  KULLANICI BİLGİLERİ kayderme users>
+const joinToFirestore =(userId)=>{
+    setDoc (doc(db, "users",userId), {                                                                
     name:joinForm.name,
     surname:joinForm.surname,
     email:joinForm.email,
@@ -435,9 +437,8 @@ const writeUserData=(userId, joinForm)=> {
     bio:joinForm.bio,
     uid:userId,
     point:2,
-
-
-  });
+    gamePosts:[],                                                                  
+	});                                                  
 }
 
 

@@ -160,7 +160,8 @@
 <script setup>
 import store from "/src/store";
 import { computed, onMounted, reactive } from "vue";
-import { getDatabase, ref, update } from "firebase/database";
+import { doc, updateDoc } from "firebase/firestore";
+import {db} from "/src/firebase"
 
 
 var editUser = {}
@@ -209,7 +210,7 @@ const updateEdit=()=>{
     editUser.twitter=editForm.twitter
     editUser.bio=editForm.bio
 
-    writeNewPost()
+    updateUserInfo(editUser.uid)
     editForm.edit = false
 }
 
@@ -220,16 +221,25 @@ const discardEdit=()=>{
 
 
 
+const updateUserInfo = id =>									                                                           
+{						
 
-function writeNewPost() {
-  const db = getDatabase();
-  const updates = {};
-  updates['/users/' + editUser.uid ] = editUser
+const updateRef = doc(db, "users", id);
 
-  return update(ref(db), updates).then(
+ updateDoc(updateRef, {
+    name:editUser.name,
+    surname:editUser.surname,
+    city:editUser.city,
+    age:editUser.age,
+    instagram:editUser.instagram,
+    twitter:editUser.twitter,
+    bio:editUser.bio,
+}).then(()=>{
     store.state.activeUser=editUser
-  )
+
 }
+)};                                                                                                                  
+
 
 onMounted(()=>{
     document.getElementById('bio').addEventListener('input', function(e){

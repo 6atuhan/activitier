@@ -141,7 +141,8 @@
 import store from "/src/store"
 import { onMounted,  reactive } from 'vue';
 import {db} from '/src/firebase'
-import { collection, addDoc } from "firebase/firestore"; 
+import { doc,collection, addDoc,updateDoc } from "firebase/firestore"; 
+
 
 
 
@@ -159,10 +160,13 @@ const addPost = reactive({
 })
 
 
+var tempAddGameId=""
 
 const postGame =()=>{
     const currentTime = new Date();
-    addDoc(collection(db, "posts"), {                                                                
+    const postsRef = collection(db, "posts")
+
+    addDoc(postsRef, {                                                                
         selectedGame : addPost.selectedGame,
         note : addPost.note,
         activeTags : addPost.activeTags,
@@ -177,11 +181,36 @@ const postGame =()=>{
         ownerName:store.state.activeUser.name,
         ownerPoint:store.state.activeUser.point,
         
-    });  
-    console.table(addPost)
+    }).then(function(docRef) {
+    console.log("Document written with ID: ", docRef.id);
+    tempAddGameId=docRef.id
+    console.log('store.state.activeUser', store.state.activeUser)
+    console.log('tempAddGameId', tempAddGameId)
+    addPostToUser()
+})
+    
     store.state.addPost = false
 }
 
+
+
+const addPostToUser = () =>									                                                           
+{						
+const userId = store.state.activeUser.uid
+const lastGamePosts = store.state.activeUser.gamePosts
+console.log('lastGamePosts', lastGamePosts)
+console.log('tempAddGameId', tempAddGameId)
+lastGamePosts.push(tempAddGameId)
+const updateRef = doc(db, "users", userId);
+
+ updateDoc(updateRef, {
+    gamePosts:lastGamePosts,
+}).then(()=>{
+
+store.state.activeUser.gamePosts=lastGamePosts 
+
+}
+)};                          
 
 
 
