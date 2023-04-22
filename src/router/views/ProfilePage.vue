@@ -101,7 +101,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr  v-for="game in store.state.posts" :key="game"  class="text-white bg-zinc-400">
+                    <tr  v-for="game in store.state.posts" :key="game" :class="game.isActive ?'bg-zinc-600' : 'bg-zinc-400'" class="text-white ">
                         <th v-if="game.ownerUid == store.state.activeUser.uid" scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
                             {{ game.id }}
                         </th>
@@ -113,7 +113,7 @@
                         </td>
 
                         <td v-if="game.ownerUid == store.state.activeUser.uid" class="px-6 py-4  cursor-pointer ">
-                            {{ game.isActive }}
+                            {{ game.isActive ? 'active':'passive' }}
                         </td>
 
                     </tr>
