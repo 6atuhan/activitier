@@ -68,17 +68,36 @@ import store from '/src/store';
 import router from "/src/router"
 import { computed } from "vue";
 
+//#region variables
 
-
+//instagram id to link converter
 const instagramlink = computed(()=>{
     return "https://www.instagram.com/"+store.state.activeUser.instagram
 })
+//instagram id to link converter
 const twitterlink = computed(()=>{
     return "https://www.twitter.com/"+store.state.activeUser.twitter
 })
 
+//#endregion
+
+
+
+//#region Functions
+//go profile page
 const goProfile=()=>{
     router.push('profile')
 }
+
+//#endregion
+
+
+
+//#region Firebase Functions
+
+                                                                                                             
+
+//#endregion
+
 
 </script>

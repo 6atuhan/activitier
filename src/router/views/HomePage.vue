@@ -99,8 +99,15 @@ import router from "/src/router"
 import store from "../../store";
 import { onMounted } from "vue";
 
+//#region variables
 
-      // -------------------------------  router links
+//#endregion
+
+
+
+//#region Functions
+
+// router links
 
   const goFaqPg =()=>{
       router.push("faq")
@@ -119,6 +126,16 @@ import { onMounted } from "vue";
       
   }
   
+//#endregion
+
+
+
+//#region Firebase Functions
+
+                                                                                                             
+
+//#endregion
+
   onMounted(()=>{
 
     // -------------------------------  opening animation
@@ -128,7 +145,7 @@ import { onMounted } from "vue";
       }, 1500);
 
   })
-  </script>
+</script>
   
   <style scoped>
   

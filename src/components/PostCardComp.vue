@@ -76,18 +76,36 @@
 
 </template>
 <script setup>
-
 import router from "/src/router"
 import store from '/src/store';
+//#region variables
+
+//#endregion
 
 
 
+//#region Functions
+//pull object from explore page
 defineProps({
 posts:Object
 })
-
+//go message page
 const goMessage=()=>{
 router.push("message")
 }
+
+//#endregion
+
+
+
+//#region Firebase Functions
+
+                                                                                                             
+
+//#endregion
+
+
+
+
 
 </script>

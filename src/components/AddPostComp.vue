@@ -142,10 +142,8 @@ import store from "/src/store"
 import { onMounted,  reactive } from 'vue';
 import {db} from '/src/firebase'
 import { doc,collection, addDoc,updateDoc } from "firebase/firestore"; 
-
-
-
-
+//#region variables
+//add post form
 const addPost = reactive({
     selectedGame:"",
     note:"",
@@ -159,9 +157,19 @@ const addPost = reactive({
     
 })
 
-
 var tempAddGameId=""
+//#endregion
 
+
+
+//#region Functions
+
+//#endregion
+
+
+
+//#region Firebase Functions
+// add game post to Firebase
 const postGame =()=>{
     const currentTime = new Date();
     const postsRef = collection(db, "posts")
@@ -187,14 +195,14 @@ const postGame =()=>{
     tempAddGameId=docRef.id
     console.log('store.state.activeUser', store.state.activeUser)
     console.log('tempAddGameId', tempAddGameId)
+    //add post id to activeUser
     addPostToUser()
 })
-    
+    //close addpost modal
     store.state.addPost = false
 }
 
-
-
+//add post id to in user > gamePosts  push post id  operation
 const addPostToUser = () =>									                                                           
 {						
 const userId = store.state.activeUser.uid
@@ -211,8 +219,9 @@ const updateRef = doc(db, "users", userId);
 store.state.activeUser.gamePosts=lastGamePosts 
 
 }
-)};                          
+)};                                                                               
 
+//#endregion
 
 
 onMounted(()=>{

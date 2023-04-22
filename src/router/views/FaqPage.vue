@@ -38,10 +38,25 @@
 <script setup>
 import { ref } from "vue";
 
+//#region variables
 const hideQuestion = ref(false)
 const question =ref("")
+//#endregion
 
+
+
+//#region Functions
 const sendQuestion=()=>{
     console.log('question : ', question.value)
 }
+
+//#endregion
+
+
+
+//#region Firebase Functions
+
+                                                                                                             
+
+//#endregion
 </script>

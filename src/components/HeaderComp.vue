@@ -78,8 +78,16 @@ import store from "/src/store"
 import { ref } from "vue";
 import { getAuth,signOut  } from "firebase/auth";
 import router from "/src/router"
-const auth = getAuth();
 
+//#region variables
+const auth = getAuth();
+const logOut=ref(false)
+
+//#endregion
+
+
+
+//#region Functions
 const logOutFunc=()=>{
     signOut(auth).then(() => {
   // Sign-out successful.
@@ -91,6 +99,18 @@ const logOutFunc=()=>{
   // An error happened.
 });
 }
+//#endregion
 
-const logOut=ref(false)
+
+
+//#region Firebase Functions
+
+                                                                                                             
+
+//#endregion
+
+
+
+
+
 </script>

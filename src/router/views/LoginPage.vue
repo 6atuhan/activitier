@@ -159,17 +159,13 @@ import { doc, setDoc,getDoc} from "firebase/firestore";
 import {db} from "/src/firebase"
 
 
-
-
-
-
-// VERİABLES
-
+//#region variables
+//enter form variables
 const enterForm=reactive({
     email:"",
     password:""
 })
-
+//join form variables
 const joinForm = reactive({
     name:"",
     surname:"",
@@ -180,7 +176,7 @@ const joinForm = reactive({
     guideAccept:false,
     bio:"biyo güncel değil."
 })
-
+//page operations check variables
 const operation = reactive({
     joinBtn :false,
     passwordStrength :0,
@@ -190,8 +186,24 @@ const operation = reactive({
 })
 
 
+//#endregion
 
 
+
+//#region Functions
+
+//reseting join form variables
+const resetJoinForm=()=>{
+    joinForm.name=""
+    joinForm.surname=""
+    joinForm.email=""
+    joinForm.password=""
+    joinForm.age=18
+    joinForm.sex="man"
+    joinForm.guideAccept=false
+    joinForm.ppUrl=""
+}
+//check password is valid ?
 const passwdStrCheck=()=>{
     operation.passwordStrength=0
     if (joinForm.password.match(/[a-z]+/)) {
@@ -207,11 +219,11 @@ const passwdStrCheck=()=>{
       operation.passwordStrength += 1;
      }
 }
-
+//check join form is valid ?
 const checkJoin=()=>{
     checkJoinForm(joinForm)
 }
-// form düzgün ise en sonunda firebase createuser çalışıyor
+// if no error create user
 const checkJoinForm=(form)=>{
     // name check
     if(form.name.length < 3 || form.name.length > 18){
@@ -302,22 +314,11 @@ const checkJoinForm=(form)=>{
     }
 }
 
-const resetJoinForm=()=>{
-    joinForm.name=""
-    joinForm.surname=""
-    joinForm.email=""
-    joinForm.password=""
-    joinForm.age=18
-    joinForm.sex="man"
-    joinForm.guideAccept=false
-    joinForm.ppUrl=""
-}
-
+//check enter form is valid ?
 const checkEnter=()=>{
     checkEnterForm(enterForm)
-
 }
-// enter form düzgünse direk sign in yapıyo
+// if no error enter.
 const checkEnterForm=(form)=>{
 
 
@@ -354,7 +355,7 @@ const checkEnterForm=(form)=>{
 
         operation.errors=[]
     }, 1500);
-
+// if errors array empty, it can be enter
     if(operation.errors.length == 0){
     const auth = getAuth();
 
@@ -368,9 +369,9 @@ const checkEnterForm=(form)=>{
             operation.success=false
             const docRef = doc(db, "users", user.uid);
                 const docSnap =  getDoc(docRef);
-
                 getDoc(docRef).then(docSnap => {
                  if (docSnap.exists()) {
+//save entered user to vuex and go profile page.
                     store.state.activeUser=docSnap.data()
                 if(store.state.activeUser != null)
                 {router.push("/profile")}
@@ -391,27 +392,27 @@ const checkEnterForm=(form)=>{
     
 }
 }
+//#endregion
 
 
 
+//#region Firebase Functions
 
-// FİRESTORE KAYIT OLMA
+// create user with mail 
 const createAccount =()=>{
     const auth = getAuth();
-    
     createUserWithEmailAndPassword(auth, joinForm.email, joinForm.password)
     .then((userCredential) => {
         // Signed in 
-        const userId = auth.currentUser.uid;
+    const userId = auth.currentUser.uid;
     const user = userCredential.user;
     joinToFirestore(userId)
     operation.success=true
     operation.joinBtn=false
     resetJoinForm()
     router.push("/login")
-
-        setTimeout(() => {
-            operation.success=false
+    setTimeout(() => {
+        operation.success=false
 
     }, 1500);
   })
@@ -423,7 +424,7 @@ const createAccount =()=>{
 
 }
 
-// FİRESTORE  KULLANICI BİLGİLERİ kayderme users>
+// save to user infos to firebase   users > pQWeQteERtoeqpğwe....
 const joinToFirestore =(userId)=>{
     setDoc (doc(db, "users",userId), {                                                                
     name:joinForm.name,
@@ -440,24 +441,21 @@ const joinToFirestore =(userId)=>{
     gamePosts:[],                                                                  
 	});                                                  
 }
-
-
-
+             
+//signout and go home page
 const goBack=()=>{
     const auth = getAuth();
 if(auth.currentUser !=null){
-
     signOut(auth).then(() => {
     router.push("/")
     }).catch((error) => {
         console.log('error', error)
 });
 }else{
-
     router.push("/")
-
 }
 }
 
+//#endregion
 
 </script>

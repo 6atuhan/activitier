@@ -84,7 +84,23 @@
 <script setup>
 
 import store from '/src/store';
+//#region variables
 
+//#endregion
+
+
+
+//#region Functions
+
+//#endregion
+
+
+
+//#region Firebase Functions
+
+                                                                                                             
+
+//#endregion
 
 
 </script>

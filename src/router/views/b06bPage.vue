@@ -302,13 +302,68 @@ import { onMounted, reactive, ref } from "vue";
 import Chart from 'chart.js/auto'
 import router from "/src/router"
 
-
+//#region variables
 const reportDay = ref("")
+//operation variables from userlist
+const operationTab=reactive({
+    openTab:false,
+    activeTab:""
+})
 
+//active tab from sidemenu
+const activePage=ref("")
+//#endregion
+
+
+
+
+
+//#region Functions
+
+
+//user action modal
+const openDialog=(event)=>{
+    operationTab.activeTab=event
+    operationTab.openTab=true
+
+}
+
+//sidemenu tabs rout.
+const goDashboard=()=>{
+    document.getElementById('dashboard').scrollIntoView();
+    activePage.value="dashboard"
+}
+const goUsers=()=>{
+    document.getElementById('users').scrollIntoView();
+    activePage.value="users"
+
+}
+const goFaqs=()=>{
+    document.getElementById('faqs').scrollIntoView();
+    activePage.value="faqs"
+    
+}
+const goReports=()=>{
+    document.getElementById('reports').scrollIntoView();
+    activePage.value="reports"
+
+}
+
+//return home page
 const goHome = ()=>{
   router.push("/")
 }
+//#endregion
 
+
+
+//#region Firebase Functions
+
+//#endregion
+
+
+
+//charts
 onMounted(()=>{
 // GENDER COUNT
 (async function() {
@@ -701,40 +756,7 @@ new Chart(
 })
 
 
-const operationTab=reactive({
-    openTab:false,
-    activeTab:""
-})
-const openDialog=(event)=>{
-    operationTab.activeTab=event
-    operationTab.openTab=true
 
-}
-
-
-
-
-
-const activePage=ref("")
-const goDashboard=()=>{
-    document.getElementById('dashboard').scrollIntoView();
-    activePage.value="dashboard"
-}
-const goUsers=()=>{
-    document.getElementById('users').scrollIntoView();
-    activePage.value="users"
-
-}
-const goFaqs=()=>{
-    document.getElementById('faqs').scrollIntoView();
-    activePage.value="faqs"
-    
-}
-const goReports=()=>{
-    document.getElementById('reports').scrollIntoView();
-    activePage.value="reports"
-
-}
 </script>
 
 <style scoped>

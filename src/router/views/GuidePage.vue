@@ -148,18 +148,3 @@
 
 </div>
 </template>
-<!-- 
-1- giriş :  kayıt ol profil oluştur
-2- anla :  guide ve faq iyice oku
-3- oyun bul :  oyun ilanı ver veya ilanı kabul et *gereksinimler uyarısı tags
-4- mesaj : kişiyi yeri zamanı oyunu konuş *yer uyarısı 
-5- oyna : buluşup anın tadını çıkarın. *nazik uyarısı
-6- oylama : sizi oylamasını isteyin ve siz de oylayın. 
-8- liderlik : oylar ve rozetlerle liderlik yapın iyi oyuncuyla herkes oynamak ister.
-9- tekrar et :
- -->
-
-<script setup>
-
-
-</script>

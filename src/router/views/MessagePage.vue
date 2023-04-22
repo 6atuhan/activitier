@@ -83,9 +83,26 @@
 </template>
 <script setup>
 import { ref } from "vue"
+
+
+//#region variables
+//variable for cat anim.
 const isPress=ref(false)
+//#endregion
 
 
+
+//#region Functions
+
+//#endregion
+
+
+
+//#region Firebase Functions
+
+                                                                                                             
+
+//#endregion
 
 
 

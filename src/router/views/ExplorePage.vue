@@ -35,6 +35,25 @@ import PostCardComp from '/src/components/PostCardComp.vue';
 import AddPostComp from "/src/components/AddPostComp.vue";
 
 
+
+//#region variables
 const posts = store.state.posts
+
+//#endregion
+
+
+
+//#region Functions
+
+//#endregion
+
+
+
+//#region Firebase Functions
+
+                                                                                                             
+
+//#endregion
+
 
 </script>

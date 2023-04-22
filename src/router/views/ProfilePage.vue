@@ -200,16 +200,12 @@
 
 <script setup>
 import store from "/src/store";
-import { computed, onMounted, reactive, ref } from "vue";
-import { doc, updateDoc,onSnapshot } from "firebase/firestore";
+import { computed, onMounted, reactive } from "vue";
+import { doc, updateDoc } from "firebase/firestore";
 import {db} from "/src/firebase"
 
-
-var editUser = {}
-editUser=store.state.activeUser
-
-
-
+//#region variables
+//edit form 
 const editForm = reactive({
         edit:false,
         name:"",
@@ -222,82 +218,93 @@ const editForm = reactive({
 
 })
 
+//object to be edited from store.
+var tempUser = {}
+tempUser=store.state.activeUser
+
+//instagram username convert to link
 const instagramlink = computed(()=>{
     return "https://www.instagram.com/"+store.state.activeUser.instagram
 })
+//twitter username convert to link
 const twitterlink = computed(()=>{
     return "https://www.twitter.com/"+store.state.activeUser.twitter
 })
+//#endregion
 
+
+
+//#region Functions
+
+//convert timestamp(firebase) to date and format dd/mm/yyyy
 const convertTime =(t)=>{
     const dt = t.toDate()
-    
-
     return (dt.getDate() + "/" + (dt.getMonth() + 1)  +"/"+ dt.getFullYear()  )
 }
 
-
-
+//open edit modal and match with input and recent value
 const openEditBox =()=>{
     editForm.edit = true
-    editForm.surname = editUser.surname
-    editForm.name = editUser.name
-    editForm.city = editUser.city
-    editForm.age = editUser.age
-    editForm.instagram = editUser.instagram
-    editForm.twitter = editUser.twitter
-    editForm.bio = editUser.bio
+    editForm.surname = tempUser.surname
+    editForm.name = tempUser.name
+    editForm.city = tempUser.city
+    editForm.age = tempUser.age
+    editForm.instagram = tempUser.instagram
+    editForm.twitter = tempUser.twitter
+    editForm.bio = tempUser.bio
 }
-
+// change tempUser value from editForm
 const updateEdit=()=>{
-
-
-    editUser.name=editForm.name
-    editUser.surname=editForm.surname
-    editUser.city=editForm.city
-    editUser.age=editForm.age
-    editUser.instagram=editForm.instagram
-    editUser.twitter=editForm.twitter
-    editUser.bio=editForm.bio
-
-    updateUserInfo(editUser.uid)
+    tempUser.name=editForm.name
+    tempUser.surname=editForm.surname
+    tempUser.city=editForm.city
+    tempUser.age=editForm.age
+    tempUser.instagram=editForm.instagram
+    tempUser.twitter=editForm.twitter
+    tempUser.bio=editForm.bio
+    // updating on firebase 
+    updateUserInfo(tempUser.uid)
+    //close edit modal
     editForm.edit = false
 }
-
-
+//close edit modal
 const discardEdit=()=>{
     editForm.edit=false
 }
+//#endregion
 
 
 
+//#region Firebase Functions
+
+//firebase firestore update function
 const updateUserInfo = id =>									                                                           
 {						
-
 const updateRef = doc(db, "users", id);
-
  updateDoc(updateRef, {
-    name:editUser.name,
-    surname:editUser.surname,
-    city:editUser.city,
-    age:editUser.age,
-    instagram:editUser.instagram,
-    twitter:editUser.twitter,
-    bio:editUser.bio,
+    name:tempUser.name,
+    surname:tempUser.surname,
+    city:tempUser.city,
+    age:tempUser.age,
+    instagram:tempUser.instagram,
+    twitter:tempUser.twitter,
+    bio:tempUser.bio,
 }).then(()=>{
-    store.state.activeUser=editUser
-
+    //update user on vuex 
+    store.state.activeUser=tempUser
 }
 )};                                                                                                                  
 
+//#endregion
+
+
 
 onMounted(()=>{
+    //textarea disable enter button and multi lines.
     document.getElementById('bio').addEventListener('input', function(e){
     this.value = this.value.replace(/\n/g,'')
         } )   
-        
-
-        
+                
 })
 
 </script>
