@@ -82,7 +82,47 @@
                 <p>{{store.state.activeUser.bio}}</p>
             </div>
                
-               
+               <div class="relative w-full  h-40 overflow-x-auto overflow-y-scroll  ">
+            <table class="w-full text-sm text-left">
+                <thead class="text-xs uppercase bg-zinc-950 text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            GAME ID
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            GAME DATE
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            GAME
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            ACTIVE
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr  v-for="game in store.state.posts" :key="game"  class="text-white bg-zinc-400">
+                        <th v-if="game.ownerUid == store.state.activeUser.uid" scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+                            {{ game.id }}
+                        </th>
+                        <td v-if="game.ownerUid == store.state.activeUser.uid" class="px-6 py-4">
+                            {{ convertTime(game.time) }}
+                        </td>
+                        <td v-if="game.ownerUid == store.state.activeUser.uid" class="px-6 py-4">
+                            {{ game.selectedGame }}
+                        </td>
+
+                        <td v-if="game.ownerUid == store.state.activeUser.uid" class="px-6 py-4  cursor-pointer ">
+                            {{ game.isActive }}
+                        </td>
+
+                    </tr>
+                    
+                </tbody>
+                </table>
+        
+        
+      </div>
             </div>
         </div>
 <!-- EDİT BUTTONS -->
@@ -159,8 +199,8 @@
 
 <script setup>
 import store from "/src/store";
-import { computed, onMounted, reactive } from "vue";
-import { doc, updateDoc } from "firebase/firestore";
+import { computed, onMounted, reactive, ref } from "vue";
+import { doc, updateDoc,onSnapshot } from "firebase/firestore";
 import {db} from "/src/firebase"
 
 
@@ -187,6 +227,15 @@ const instagramlink = computed(()=>{
 const twitterlink = computed(()=>{
     return "https://www.twitter.com/"+store.state.activeUser.twitter
 })
+
+const convertTime =(t)=>{
+    const dt = t.toDate()
+    
+
+    return (dt.getDate() + "/" + (dt.getMonth() + 1)  +"/"+ dt.getFullYear()  )
+}
+
+
 
 const openEditBox =()=>{
     editForm.edit = true

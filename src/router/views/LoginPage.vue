@@ -88,7 +88,7 @@
 
                         </div>
 <!-- email -->
-                        <input v-model="enterForm.email" class="py-1 border w-full outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" placeholder="mail" type="email">
+                        <input v-model="enterForm.email" autofocus  class="py-1 border w-full outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" placeholder="mail" type="email">
 <!-- password -->
                         <div class="flex w-full">
                             <input id="passwordId" @keyup="passwdStrCheck" @keydown.enter="checkEnter" v-model="enterForm.password" :type="operation.showPw ? 'text':'password' " class="py-1 border w-full mr-2 outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" placeholder="password" >
@@ -444,13 +444,19 @@ const joinToFirestore =(userId)=>{
 
 
 const goBack=()=>{
-    signOut(auth).then(() => {
-  // Sign-out successful.
-  router.push("/")
+    const auth = getAuth();
+if(auth.currentUser !=null){
 
-}).catch((error) => {
-  // An error happened.
+    signOut(auth).then(() => {
+    router.push("/")
+    }).catch((error) => {
+        console.log('error', error)
 });
+}else{
+
+    router.push("/")
+
+}
 }
 
 

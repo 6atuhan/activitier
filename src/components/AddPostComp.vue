@@ -180,6 +180,7 @@ const postGame =()=>{
         ownerUid:store.state.activeUser.uid,
         ownerName:store.state.activeUser.name,
         ownerPoint:store.state.activeUser.point,
+
         
     }).then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
