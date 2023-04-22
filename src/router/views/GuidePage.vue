@@ -1,7 +1,7 @@
 <template>
 <div class=" container mx-auto  my-4 pb-24 flex flex-col justify-center items-center gap-5"> 
     <!-- #1 join  -->
-    <div class=" w-11/12 md:w-fit md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
+    <div class=" w-11/12  md:min-w-[700px] md:max-w-[1000px]    md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
         <h1 class="font-Baloo-Regular  my-6 text-outline text-red-400 "> #1 Join </h1>
         <div class="flex flex-row-reverse items-center justify-center flex-wrap gap-4">
             <div class="w-[400px] basis-[400px] h-[200px] select-none   overflow-hidden">
@@ -16,10 +16,10 @@
 
 
         <!-- #2 understand  -->
-        <div class=" w-11/12 md:w-fit md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white ">  
+        <div class=" w-11/12  md:min-w-[700px] md:max-w-[1000px]    md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white ">  
 
         <h1 class="font-Baloo-Regular  my-6 text-outline text-fuchsia-400"> #2 Understand </h1>
-        <div class="flex flex-row w-full items-center justify-center  flex-wrap gap-4">
+        <div class="flex flex-row w-full items-center justify-center   flex-wrap gap-4">
             <div class="w-[400px] basis-[400px] h-[200px] select-none   overflow-hidden">
                 <img src="/src/assets/gifs/abstract-list-is-empty.gif" class="object-cover select-none  h-full w-full" alt="">
             </div>
@@ -30,9 +30,9 @@
         </div>
     </div>
                     <!-- #3 Find Game  -->
-                    <div class=" w-11/12 md:w-fit md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
+                    <div class=" w-11/12  md:min-w-[700px] md:max-w-[1000px]   md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
         <h1 class="font-Baloo-Regular  my-6 text-outline text-lime-300"> #3 Find Game </h1>
-        <div class="flex flex-row-reverse items-center justify-center   flex-wrap gap-4">
+        <div class="flex flex-row-reverse items-center justify-center flex-wrap gap-4">
             <div class="w-[400px] basis-[400px] h-[200px] select-none   overflow-hidden">
                 <img src="/src/assets/gifs/abstract-working-remotely.gif" class="object-cover select-none  h-full w-full" alt="">
             </div>
@@ -43,7 +43,7 @@
         </div>
     </div>
 <!-- #4 Message  -->
-<div class=" w-11/12 md:w-fit md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
+<div class=" w-11/12  md:min-w-[700px] md:max-w-[1000px]    md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
 
 <h1 class="font-Baloo-Regular  my-6 text-outline text-orange-500"> #4 Message </h1>
 <div class="flex flex-row items-center justify-center   flex-wrap gap-4">
@@ -60,7 +60,7 @@
 
 
 <!-- #5 Meet  -->
-<div class=" w-11/12 md:w-fit md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
+<div class=" w-11/12  md:min-w-[700px] md:max-w-[1000px]    md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
 
 <h1 class="font-Baloo-Regular  my-6 text-outline text-rose-300"> #5 Meet </h1>
 <div class="flex flex-row-reverse items-center justify-center   flex-wrap gap-4">
@@ -77,7 +77,7 @@
 
 
 <!-- #6 Rating  -->
-<div class=" w-11/12 md:w-fit md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white ">  
+<div class=" w-11/12  md:min-w-[700px] md:max-w-[1000px]    md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white ">  
 
 <h1 class="font-Baloo-Regular  my-6 text-outline text-yellow-400"> #6 Rating </h1>
 <div class="flex flex-row items-center justify-center   flex-wrap gap-4">
@@ -95,7 +95,7 @@
 
 
 <!-- #7 Leadership  -->
-<div class=" w-11/12 md:w-fit md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
+<div class=" w-11/12  md:min-w-[700px] md:max-w-[1000px]    md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
 
 <h1 class="font-Baloo-Regular  my-6 text-outline text-green-400"> #7 Leadership </h1>
 <div class="flex flex-row-reverse items-center justify-center   flex-wrap gap-4">
@@ -110,7 +110,7 @@
 </div>
 
 <!-- #8 Take Photo  -->
-<div class=" w-11/12 md:w-fit md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
+<div class=" w-11/12  md:min-w-[700px] md:max-w-[1000px]    md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
 
 <h1 class="font-Baloo-Regular  my-6 text-outline text-slate-400"> #8 Take Photo </h1>
 <div class="flex flex-row items-center justify-center   flex-wrap gap-4">
@@ -127,7 +127,7 @@
 
 
 <!-- #9 Repeat  -->
-<div class=" w-11/12 md:w-fit md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
+<div class=" w-11/12  md:min-w-[700px] md:max-w-[1000px]    md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
 
 <h1 class="font-Baloo-Regular  my-6 text-outline text-blue-500"> #9 Repeat </h1>
 <div class="flex flex-row-reverse items-center justify-center   flex-wrap gap-4">
