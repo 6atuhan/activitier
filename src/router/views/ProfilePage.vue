@@ -82,6 +82,7 @@
                 <p>{{store.state.activeUser.bio}}</p>
             </div>
                
+            <h1 class="text-outline uppercase text-white font-Baloo-Regular">all my posts</h1>
                <div class="relative w-full  h-40 overflow-x-auto overflow-y-scroll  ">
             <table class="w-full text-sm text-left">
                 <thead class="text-xs uppercase bg-zinc-950 text-gray-400">
