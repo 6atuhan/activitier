@@ -44,6 +44,11 @@ import homepage from   "/src/router/views/HomePage.vue"
       path:'/b06b',
       name:'b06b',
       component:()=>import("/src/router/views/b06bPage.vue")
+   },
+     {
+      path:'/deneme',
+      name:'deneme',
+      component:()=>import("/src/router/views/DenemePage.vue")
    }
 
 

@@ -4,7 +4,7 @@
 <div class="container md:order-1 mx-auto w-full md:w-[768px] items-start justify-center flex flex-row flex-wrap gap-4">
 
     <div class="card bg-blue-100  border border-black rounded-xl w-full p-4 shrink-0 relative flex flex-col md:flex-row gap-2 justify-center items-center">
-        <h3  class="border z-40 border-black !font-Baloo-Regular bg-blue-100 rounded-xl absolute left-0 -top-3 px-4 ml-4 hover-anim !text-xl uppercase">{{ store.state.activeUser.name }}</h3>
+        <h3  class="border z-40 h-[28px] border-black !font-Baloo-Regular bg-blue-100 rounded-xl absolute left-0 -top-3 px-4 ml-4 hover-anim !text-xl uppercase">{{ store.state.activeUser.name }}</h3>
 
 
 
@@ -103,17 +103,17 @@
                 </thead>
                 <tbody>
                     <tr  v-for="game in store.state.posts" :key="game" :class="game.isActive ?'bg-zinc-600' : 'bg-zinc-400'" class="text-white ">
-                        <th v-if="game.ownerUid == store.state.activeUser.uid" scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+                        <th v-if="game.ownerUid == store.state.activeUser.uid" scope="row" class="px-6 select-all py-4 font-medium  whitespace-nowrap ">
                             {{ game.id }}
                         </th>
-                        <td v-if="game.ownerUid == store.state.activeUser.uid" class="px-6 py-4">
+                        <td v-if="game.ownerUid == store.state.activeUser.uid" class="px-6 py-4 select-none">
                             {{ convertTime(game.time) }}
                         </td>
-                        <td v-if="game.ownerUid == store.state.activeUser.uid" class="px-6 py-4">
+                        <td v-if="game.ownerUid == store.state.activeUser.uid" class="px-6 py-4 select-none">
                             {{ game.selectedGame }}
                         </td>
 
-                        <td v-if="game.ownerUid == store.state.activeUser.uid" class="px-6 py-4  cursor-pointer ">
+                        <td v-if="game.ownerUid == store.state.activeUser.uid" class="px-6 py-4 select-none ">
                             {{ game.isActive ? 'active':'passive' }}
                         </td>
 
@@ -142,69 +142,70 @@
 </div>
 </div>
 
-<div v-show="editForm.edit"  class="flex items-center justify-center bg-black/50 h-screen w-screen overflow-scroll overflow-x-hidden fixed top-0 left-0 z-[9999] "> 
+<div v-show="editForm.edit" :class="isValidEditForm ? 'bg-black/50':'bg-red-500/50'" class="flex items-center justify-center  h-screen w-screen overflow-scroll overflow-x-hidden fixed top-0 left-0 z-[9999] "> 
 
     <!-- editForm.edit area -->
 
-    <div class="bg-amber-900 flex flex-col justify-center items-center flex-wrap border font-Quicksand mx-auto p-4 border-black hover-shadow-full relative rounded-lg  w-96 h-96">
-        
+
+        <form action=""  @submit.prevent class="bg-amber-900 flex flex-col justify-center items-center flex-wrap border font-Quicksand mx-auto p-4 border-black hover-shadow-full relative rounded-lg  w-96 h-96">
         <!-- name -->
-        <label for="name" class="text-outline font-Baloo-Regular tracking-widest text-white">Name :</label>
-        <input  v-model="editForm.name" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="name" placeholder="name" type="text">
+        <label for="name" class="text-outline font-Baloo-Regular tracking-widest text-white" >Name :</label>
+        <input    v-model="editForm.name" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="name" placeholder="name" type="text" required/>
 
          <!-- surname -->
-         <label for="surname" class="text-outline font-Baloo-Regular tracking-widest text-white">surname :</label>
-        <input  v-model="editForm.surname" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="surname" placeholder="surname" type="text">
+         <label for="surname" class="text-outline font-Baloo-Regular tracking-widest text-white" >surname :</label>
+        <input    v-model="editForm.surname" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="surname" placeholder="surname" type="text" required/>
         
         <!-- city -->
-        <label for="city" class="text-outline font-Baloo-Regular tracking-widest text-white">city :</label>
-        <input  v-model="editForm.city" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="city" placeholder="city" type="text">        
+        <label for="city" class="text-outline font-Baloo-Regular tracking-widest text-white" >city :</label>
+        <input    v-model="editForm.city" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="city" placeholder="city" type="text" required/>        
         
         
                  <!-- age -->
-                 <label for="age" class="text-outline font-Baloo-Regular tracking-widest text-white">age :</label>
-        <input  v-model="editForm.age" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="age" placeholder="age" type="number">
+                 <label for="age" class="text-outline font-Baloo-Regular tracking-widest text-white" >age :</label>
+        <input    v-model="editForm.age" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="age" placeholder="age" type="number" required/>
 
                  <!-- instagram -->
-                 <label for="instagram" class="text-outline font-Baloo-Regular tracking-widest text-white">instagram :</label>
-        <input  v-model="editForm.instagram" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="instagram" placeholder="username" type="text">
+                 <label for="instagram" class="text-outline font-Baloo-Regular tracking-widest text-white" >instagram :</label>
+        <input    v-model="editForm.instagram" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="instagram" placeholder="username" type="text" required/>
 
                  <!-- twitter -->
-                 <label for="twitter" class="text-outline font-Baloo-Regular tracking-widest text-white">twitter :</label>
-        <input  v-model="editForm.twitter" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="twitter" placeholder="username" type="text">
+                 <label for="twitter" class="text-outline font-Baloo-Regular tracking-widest text-white" >twitter :</label>
+        <input    v-model="editForm.twitter" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="twitter" placeholder="username" type="text" required/>
         
 
          <!-- bio -->
-         <label for="bio" class="text-outline  h-full w-2/5 flex flex-col font-Baloo-Regular tracking-widest text-white">bio :
+         <label for="bio" class="text-outline  h-full w-2/5 flex flex-col font-Baloo-Regular tracking-widest text-white" >bio :
         <textarea v-model="editForm.bio" id="bio"   autocomplete="off"   class="py-1 h-full resize-none w-full border font-Quicksand outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black"  placeholder="bio" >
             </textarea>
         </label>
-
         <!-- BUTTONS -->
         <!-- save -->
-            <div @click="updateEdit" v-show="editForm.edit" class=" button  z-30 !px-0 items-center justify-center flex !py-0 rounded-full  bg-green-400 hover:bg-green-600 cursor-pointer h-8 w-8 absolute -bottom-4 right-6 md:bottom-16 md:-right-4  group ">
+            <button type="button" @click="updateEdit" v-show="editForm.edit" class=" button  z-30 !px-0 items-center justify-center flex !py-0 rounded-full  bg-green-400 hover:bg-green-600 cursor-pointer h-8 w-8 absolute -bottom-4 right-6 md:bottom-16 md:-right-4  group ">
                 <svg  width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="m3 12 6 6L21 6"></path>
                 </svg>
-            </div>
+            </button>
             <!-- discard -->
-            <div @click="discardEdit" v-show="editForm.edit"  class=" button  z-30 !px-0 items-center justify-center flex !py-0 rounded-full  bg-red-400 hover:bg-red-600 cursor-pointer h-8 w-8 absolute -bottom-4 right-16 md:bottom-6 md:-right-4  group ">
+            <button type="button" @click="discardEdit" v-show="editForm.edit"  class=" button  z-30 !px-0 items-center justify-center flex !py-0 rounded-full  bg-red-400 hover:bg-red-600 cursor-pointer h-8 w-8 absolute -bottom-4 right-16 md:bottom-6 md:-right-4  group ">
                 <svg  width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="m5 5 14 14M5 19 19 5"></path>
                 </svg>
-            </div>
-    </div>
+            </button>
+    </form>
 </div>
 
 </template>
 
 <script setup>
 import store from "/src/store";
-import { computed, onMounted, reactive } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { doc, updateDoc } from "firebase/firestore";
 import {db} from "/src/firebase"
 
 //#region variables
+//check editform inputs for edit form modal bg color
+const isValidEditForm = ref(true)
 //edit form 
 const editForm = reactive({
         edit:false,
@@ -253,8 +254,21 @@ const openEditBox =()=>{
     editForm.twitter = tempUser.twitter
     editForm.bio = tempUser.bio
 }
+
+
 // change tempUser value from editForm
 const updateEdit=()=>{
+
+    //check editForm
+    if(editForm.name=="" || editForm.surname=="" || editForm.city=="" || editForm.instagram=="" || editForm.twitter=="" || editForm.bio=="" || editForm.age <= 17)
+    {
+        isValidEditForm.value = false
+        return false
+    }
+    else{
+        //check inputs is valid
+        isValidEditForm.value = true
+        //updating temp user object for import to firebase
     tempUser.name=editForm.name
     tempUser.surname=editForm.surname
     tempUser.city=editForm.city
@@ -262,10 +276,11 @@ const updateEdit=()=>{
     tempUser.instagram=editForm.instagram
     tempUser.twitter=editForm.twitter
     tempUser.bio=editForm.bio
-    // updating on firebase 
-    updateUserInfo(tempUser.uid)
-    //close edit modal
-    editForm.edit = false
+        // updating on firebase 
+        updateUserInfo(tempUser.uid)
+        //close edit modal
+        editForm.edit = false
+    }
 }
 //close edit modal
 const discardEdit=()=>{
