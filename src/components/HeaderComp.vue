@@ -2,13 +2,13 @@
      <div class="header font-Quicksand font-semibold relative">
         
 
-        <router-link active-class="text-red-400 fill-red-400 scale-105" to="/"  class="cursor-pointer hover:text-red-400 transition-all ">
+        <div active-class="text-red-400 fill-red-400 scale-105" @click="logOutFunc" class="cursor-pointer hover:text-red-400 transition-all ">
             <div class="hidden md:inline-flex items-center">
                 <img class=" w-16" src="/src/assets/full-logo.png" alt=""> <p>activitier</p>
 
             </div>
             <img class="visible md:hidden w-8" src="/src/assets/sm-logo.png" alt="">
-        </router-link>
+        </div>
                 <router-link v-if="store.state.activeUser != null" active-class="text-red-400 fill-red-400 scale-105" to="explore" class="cursor-pointer hover:text-red-400 transition-all ">
                     <p class="hidden md:inline-flex" >explore</p>
                     <svg  class="visible md:hidden hover:fill-red-600 cubic-bezier" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="24" height="24"><path d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm8.647,7H17.426a19.676,19.676,0,0,0-2.821-4.644A10.031,10.031,0,0,1,20.647,7ZM16.5,12a10.211,10.211,0,0,1-.476,3H7.976A10.211,10.211,0,0,1,7.5,12a10.211,10.211,0,0,1,.476-3h8.048A10.211,10.211,0,0,1,16.5,12ZM8.778,17h6.444A19.614,19.614,0,0,1,12,21.588,19.57,19.57,0,0,1,8.778,17Zm0-10A19.614,19.614,0,0,1,12,2.412,19.57,19.57,0,0,1,15.222,7ZM9.4,2.356A19.676,19.676,0,0,0,6.574,7H3.353A10.031,10.031,0,0,1,9.4,2.356ZM2.461,9H5.9a12.016,12.016,0,0,0-.4,3,12.016,12.016,0,0,0,.4,3H2.461a9.992,9.992,0,0,1,0-6Zm.892,8H6.574A19.676,19.676,0,0,0,9.4,21.644,10.031,10.031,0,0,1,3.353,17Zm11.252,4.644A19.676,19.676,0,0,0,17.426,17h3.221A10.031,10.031,0,0,1,14.605,21.644ZM21.539,15H18.1a12.016,12.016,0,0,0,.4-3,12.016,12.016,0,0,0-.4-3h3.437a9.992,9.992,0,0,1,0,6Z"/></svg>
@@ -88,16 +88,20 @@ const logOut=ref(false)
 
 
 //#region Functions
+
+//signout and go home page
 const logOutFunc=()=>{
+    const auth = getAuth();
+if(auth.currentUser !=null){
     signOut(auth).then(() => {
-  // Sign-out successful.
-  store.state.activeUser=null
+    store.state.activeUser=null
   router.push("/")
-
-
-}).catch((error) => {
-  // An error happened.
+    }).catch((error) => {
+        console.log('error', error)
 });
+}else{
+    router.push("/")
+}
 }
 //#endregion
 

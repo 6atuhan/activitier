@@ -163,7 +163,20 @@ var tempAddGameId=""
 
 
 //#region Functions
+const resetAddPostForm=()=>{
+    addPost.selectedGame=""
+    addPost.note=""
+    addPost.activeTags=[]
+    addPost.player="1p"
+    addPost.date="today"
+    addPost.location="00000000"
+    addPost.time= ""
+    addPost.city=""
+    addPost.state=""
+    tempAddGameId=""
 
+
+}
 //#endregion
 
 
@@ -191,12 +204,13 @@ const postGame =()=>{
 
         
     }).then(function(docRef) {
-    console.log("Document written with ID: ", docRef.id);
+
     tempAddGameId=docRef.id
-    console.log('store.state.activeUser', store.state.activeUser)
-    console.log('tempAddGameId', tempAddGameId)
+
     //add post id to activeUser
     addPostToUser()
+    //reset add post input fields
+    resetAddPostForm()
 })
     //close addpost modal
     store.state.addPost = false
