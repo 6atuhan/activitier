@@ -1,13 +1,13 @@
 <template>
-<div v-for="post in posts" :key="post.id" :class="post.isActive ? 'opacity-100' : 'opacity-30 pointer-events-none cursor-not-allowed select-none '"   class=" bg-[#F2E8D5] mb-4 border border-black rounded-xl h-[400px] w-64 md:h-52 md:w-[480px] p-4 shrink-0 relative flex flex-col md:flex-row gap-2 justify-center items-center ">
-    <div  class=" font-Quicksand  z-50  button text-white !py-0 bg-blue-100  absolute left-0 -top-3 ml-4 flex items-center justify-center gap-2 ">
+<div v-for="post in posts" :key="post.id" :class="post.isActive ? 'opacity-100' : 'opacity-30 pointer-events-none cursor-not-allowed select-none '"   class=" bg-[#E25031] mb-4 border border-black rounded-xl h-[400px] w-64 md:h-52 md:w-[480px] p-4 shrink-0 relative flex flex-col md:flex-row gap-2 justify-center items-center ">
+    <div  class=" font-Quicksand  z-50  button text-white !py-0 bg-[#EADDAC]  absolute left-0 -top-3 ml-4 flex items-center justify-center gap-2 ">
         {{ post.selectedGame }}
-        <div  :class="post.isActive ? 'bg-green-600':'bg-pink-600'" class="button w-4 h-4 p-0  "></div>
+        <div  :class="post.isActive ? 'bg-green-600':'bg-pink-600'" class="button w-4 h-4 p-0   "></div>
         <h3>{{ post.date }}</h3>
 
     </div>
     <!-- GAME LOGOS -->
-    <div :class=" post.selectedGame=='puzzle' ? 'bg-[#DA0358]' : post.selectedGame=='chess' ? 'bg-[#05002C]': post.selectedGame=='billiards' ? 'bg-[#E80014] ' : post.selectedGame=='tennis' ? 'bg-[#39CE12]' : post.selectedGame=='video' ? 'bg-[#029e96]' : post.selectedGame=='bowling' ? 'bg-[#C82638]' : post.selectedGame=='dex' ? 'bg-[#AB3F00] ' : post.selectedGame=='basketball' ? 'bg-[#ff370a]' : post.selectedGame=='football' ? 'bg-[#26D542]': post.selectedGame=='other' ? 'bg-[#170E17]':'' " class=" font-Quicksand h-8 w-8 z-40 button  text-white !py-0 !px-0   absolute -left-4 -top-3 flex items-center justify-center overflow-hidden ">
+    <div :class=" post.selectedGame=='puzzle' ? 'bg-[#DA0358]' : post.selectedGame=='chess' ? 'bg-[#05002C]': post.selectedGame=='billiards' ? 'bg-[#E80014] ' : post.selectedGame=='tennis' ? 'bg-[#39CE12]' : post.selectedGame=='video' ? 'bg-[#029e96]' : post.selectedGame=='bowling' ? 'bg-[#C82638]' : post.selectedGame=='dex' ? 'bg-[#AB3F00] ' : post.selectedGame=='basketball' ? 'bg-[#ff370a]' : post.selectedGame=='football' ? 'bg-[#26D542]': post.selectedGame=='other' ? 'bg-[#170E17]':'' " class=" font-Quicksand h-8 w-8 z-40 button  text-white !py-0 !px-0  absolute -left-4 -top-3 flex items-center justify-center overflow-hidden ">
       <svg v-if="post.selectedGame=='puzzle' "  class=" cubic-bezier pl-1 pb-1 scale-110"   fill="#fff" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="24" height="24"><path d="M18,24h-7.431s.431-1.308,.431-2.5c0-1.379-1.122-2.5-2.5-2.5s-2.5,1.121-2.5,2.5c0,1.013,.431,2.5,.431,2.5H0V8.5c0-1.379,1.122-2.5,2.5-2.5h2.909c-.253-.968-.409-1.903-.409-2.5,0-1.93,1.57-3.5,3.5-3.5s3.5,1.57,3.5,3.5c0,.597-.155,1.532-.409,2.5h3.909c1.378,0,2.5,1.121,2.5,2.5v2.909c.969-.254,1.904-.409,2.5-.409,1.93,0,3.5,1.57,3.5,3.5s-1.57,3.5-3.5,3.5c-.596,0-1.531-.155-2.5-.409v6.409Zm-6.18-1h5.18v-6.743s2.103,.743,3.5,.743c1.378,0,2.5-1.121,2.5-2.5s-1.122-2.5-2.5-2.5c-1.064,0-3.5,.743-3.5,.743v-4.243c0-.827-.673-1.5-1.5-1.5h-5.244s.744-2.333,.744-3.5c0-1.379-1.122-2.5-2.5-2.5s-2.5,1.121-2.5,2.5c0,1.218,.744,3.5,.744,3.5H2.5c-.827,0-1.5,.673-1.5,1.5v14.5H5.18c-.116-.595-.18-1.123-.18-1.5,0-1.93,1.57-3.5,3.5-3.5s3.5,1.57,3.5,3.5c0,.377-.064,.905-.18,1.5Z"/></svg>
          <svg v-if="post.selectedGame=='chess' "  class="cubic-bezier" fill="#fff" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="24" height="24"><path d="M20,19.051V8c0-.08-.113-8-9.938-8h-.391l-.095,.379c-.745,2.98-2.023,4.023-3.979,4.816-.971,.393-1.598,1.308-1.598,2.33v1.475h6.389c-.796,3.317-3.363,4.924-4.876,5.6-.919,.409-1.513,1.311-1.513,2.296v2.155c-1.14,.232-2,1.242-2,2.449v2.5H22v-2.5c0-1.208-.86-2.217-2-2.449Zm-14.08-3.538c1.783-.796,4.878-2.755,5.573-6.931l.097-.582H5v-.475c0-.613,.382-1.164,.973-1.403,2.055-.833,3.608-2.036,4.474-5.118,8.425,.192,8.553,6.716,8.554,6.996v11H5v-2.104c0-.591,.36-1.134,.92-1.383Zm15.08,7.487H3v-1.5c0-.827,.673-1.5,1.5-1.5h15c.827,0,1.5,.673,1.5,1.5v1.5Z"/></svg>
    <svg v-if="post.selectedGame=='billiards' " class="cubic-bezier"    fill="#fff" height="32" width="32" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M256,118.857c-75.621,0-137.143,61.522-137.143,137.143S180.379,393.143,256,393.143S393.143,331.621,393.143,256 S331.621,118.857,256,118.857z M256,374.857c-65.538,0-118.857-53.319-118.857-118.857S190.462,137.143,256,137.143 S374.857,190.462,374.857,256S321.538,374.857,256,374.857z"></path> </g> </g> <g> <g> <path d="M256,0C114.842,0,0,114.842,0,256s114.842,256,256,256s256-114.842,256-256S397.158,0,256,0z M256,493.714 C124.924,493.714,18.286,387.076,18.286,256S124.924,18.286,256,18.286S493.714,124.924,493.714,256S387.076,493.714,256,493.714z "></path> </g> </g> <g> <g> <path d="M298.393,256c7.623-6.708,12.464-16.502,12.464-27.429c0-20.165-16.408-36.571-36.576-36.571h-36.565 c-20.168,0-36.574,16.406-36.574,36.571c0,10.926,4.842,20.721,12.462,27.429c-7.62,6.708-12.462,16.502-12.462,27.429 c0,20.165,16.406,36.571,36.574,36.571h36.565c20.168,0,36.576-16.406,36.576-36.571C310.857,272.502,306.016,262.708,298.393,256 z M274.281,301.714h-36.565c-10.085,0-18.288-8.203-18.288-18.286s8.203-18.286,18.288-18.286h36.565 c10.085,0,18.29,8.203,18.29,18.286S284.366,301.714,274.281,301.714z M274.281,246.857h-36.565 c-10.085,0-18.288-8.203-18.288-18.286s8.203-18.286,18.288-18.286h36.565c10.085,0,18.29,8.203,18.29,18.286 S284.366,246.857,274.281,246.857z"></path> </g> </g> </g></svg>
@@ -20,15 +20,15 @@
     <svg v-if="post.selectedGame=='other' "  xmlns="http://www.w3.org/2000/svg" class="cubic-bezier"  fill="#fff" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="24" height="24"><path d="M19.5,9h-6c-2.481,0-4.5,2.019-4.5,4.5v6c0,2.481,2.019,4.5,4.5,4.5h6c2.481,0,4.5-2.019,4.5-4.5v-6c0-2.481-2.019-4.5-4.5-4.5Zm3.5,10.5c0,1.93-1.57,3.5-3.5,3.5h-6c-1.93,0-3.5-1.57-3.5-3.5v-6c0-1.93,1.57-3.5,3.5-3.5h6c1.93,0,3.5,1.57,3.5,3.5v6Zm-8-5.5c0,.552-.448,1-1,1s-1-.448-1-1,.448-1,1-1,1,.448,1,1Zm5,5c0,.552-.448,1-1,1s-1-.448-1-1,.448-1,1-1,1,.448,1,1ZM9,6c-.552,0-1-.448-1-1s.448-1,1-1,1,.448,1,1-.448,1-1,1Zm-4,2c.552,0,1,.448,1,1s-.448,1-1,1-1-.448-1-1,.448-1,1-1Zm1.913,8.585c-.097,.142-.253,.218-.413,.218-.097,0-.196-.028-.282-.087-.229-.157-.445-.337-.643-.534L1.333,11.939C-.422,10.185-.422,7.33,1.333,5.575L5.575,1.333C6.425,.482,7.556,.015,8.757,.015s2.333,.468,3.182,1.318l4.242,4.242c.197,.197,.377,.414,.534,.643,.155,.228,.098,.539-.131,.695-.225,.154-.537,.098-.695-.131-.121-.178-.261-.346-.415-.5L11.232,2.04c-1.322-1.322-3.628-1.323-4.95,0L2.04,6.282c-1.365,1.365-1.365,3.585,0,4.95l4.242,4.242c.154,.154,.322,.294,.5,.415,.228,.156,.286,.468,.13,.695Z"/></svg>
     </div>
 
-    <div id="harita" :class="store.state.boy ? '!bg-[#51A5DB]':'!bg-[#E6686F]'" class="bg-[#51A5DB] h-full w-[222px] md:w-[192px] md:h-[174px] overflow-hidden   rounded-xl border border-black self-center flex items-center justify-start flex-col  box-border border-collapse hover-anim">
+    <div id="harita" class="bg-[#EADDAC] h-full w-[222px] md:w-[192px] md:h-[174px] overflow-hidden   rounded-xl border border-black self-center flex items-center justify-start flex-col  box-border border-collapse hover-anim">
 
             <img class="w-full h-[90%] object-cover  m-0 p-0  transition-all border-b border-black rounded-t-lg " src="/src/assets/google-map.png" alt="">
             <div class="flex items-center justify-center w-full font-Baloo-Regular text-sm select-none">
-                <p class="text-ellipsis w-1/2 overflow-hidden text-left px-1">
+                <p class="text-ellipsis w-1/2 overflow-hidden text-left px-2">
                     {{ post.city }}
                 </p>
 
-                <p class="text-ellipsis w-1/2 overflow-hidden text-right px-1">
+                <p class="text-ellipsis w-1/2 overflow-hidden text-right px-2">
 
                     {{ post.state }}
                 </p>
@@ -37,12 +37,12 @@
             
 
         </div>
-    <div id="bilgiler" :class="store.state.boy ? '!bg-[#51A5DB]':'!bg-[#E6686F]'"  class="bg-[#51A5DB] h-[292px] w-[222px] md:w-[292px] md:h-[174px] rounded-xl border border-black self-center flex flex-col gap-2 py-2 hover-anim">
+    <div id="bilgiler"  class="bg-[#EADDAC] h-[292px] w-[222px] md:w-[292px] md:h-[174px] rounded-xl border border-black self-center flex flex-col gap-2 py-2 hover-anim">
 
         
         <div id="profile" class=" flex w-full gap-2 items-center justify-start px-2 ">
             <div class="bg-white h-12 w-12 rounded-full border border-black text-center text-[36px]  overflow-hidden hover-shadow hover:-translate-x-0.5 hover:-translate-y-0.5 box-border cubic-bezier">
-                <img src="/src/assets/logo-pp.png" class="object-cover	 h-12 w-12 	" alt="profilePhoto">
+                <img :src="post.ownerPpUrl" class="object-cover	 h-12 w-12 	" alt="profilePhoto">
 
             </div>
             <div class=" font-Baloo-Regular">

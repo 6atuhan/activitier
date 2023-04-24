@@ -1,12 +1,12 @@
 <template>
-            <div :class="store.state.boy ? '!bg-[#E6686F]' : '!bg-[#51A5DB]'"   class="profile bg-[#E6686F]  border border-black rounded-xl mb-5  p-4 shrink-0 relative flex flex-col md:flex-row gap-2 justify-center items-center">
-                <h3 @click="goProfile" :class="store.state.boy ? '!bg-[#E6686F]' : '!bg-[#51A5DB]'"  class="z-50 border button !py-0 bg-[#E6686F] text-white absolute left-0 -top-3 ml-4  font-Baloo-Regular">PROFILE</h3>
-                <div id="bilgiler" class="relative font-Quicksand font-medium bg-stone-100  w-[222px] md:w-[292px] rounded-xl border border-black self-center flex flex-col gap-2 py-2 hover-anim">
+            <div    class="profile bg-[#8E6DFF]  border border-black rounded-xl mb-5  p-4 shrink-0 relative flex flex-col md:flex-row gap-2 justify-center items-center">
+                <h3 @click="goProfile"   class="z-50 border button !py-0 bg-[#8E6DFF] text-white absolute left-0 -top-3 ml-4  font-Baloo-Regular">PROFILE</h3>
+                <div id="bilgiler" class="relative font-Quicksand font-medium bg-[#E6E6E6]  w-[222px] md:w-[292px] rounded-xl border border-black self-center flex flex-col gap-2 py-2 hover-anim">
                     <div id="profile" class=" flex w-full gap-2 items-center justify-start px-2 flex-wrap ">
                        <!-- profile photo -->
                         <div class="  shrink-0  mx-auto h-20 md:w-20 rounded-full border border-black text-center text-[36px]  overflow-hidden hover-shadow hover:-translate-x-0.5 hover:-translate-y-0.5 box-border cubic-bezier">
                             <div class="h-20 w-20 relative  mx-auto ">
-                                <img src="/src/assets/logo-pp.png" class="object-cover	 z-20 h-20 w-20 	" alt="profilePhoto">
+                                <img :src="store.state.activeUser.ppUrl" class="object-cover	 z-20 h-20 w-20 	" alt="profilePhoto">
                             </div>
                         </div>
 

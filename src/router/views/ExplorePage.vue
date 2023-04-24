@@ -1,4 +1,6 @@
 <template >
+    <h1 class="text-white text-2xl text-outline  w-fit font-Baloo-Regular select-none ml-4 visible md:invisible mt-4 ">EXPLORE</h1>
+
     <add-post-comp></add-post-comp>
     <div v-if="store.state.activeUser != null && store.state.addPost==false " @click="store.state.addPost=true" class="button bg-yellow-500 fixed bottom-36 md:bottom-10 right-4 z-[99999] text-white">
         <div class="relative group ">

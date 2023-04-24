@@ -39,7 +39,8 @@ onSnapshot(siraliPosts, (querySnapshot) => {
         time:doc.data().time,
         ownerUid:doc.data().ownerUid,
         ownerName:doc.data().ownerName,
-        ownerPoint:doc.data().ownerPoint,                                                                             
+        ownerPoint:doc.data().ownerPoint,
+        ownerPpUrl:doc.data().ownerPpUrl,                                                                             
         }                                                                                                
         veriler.push(cekilenVeri)                                                                                                                                                
 	 });                                                                                                 
@@ -94,7 +95,7 @@ r.style.setProperty('--bgcolor', '#2A1B58');
 else if (to.name == "Explore"){
 
 store.state.homePageCheck=true
-if(store.state.boy){
+if(store.state.activeUser.sex=='man'){
 //boy
   r.style.setProperty('--bgcolor', '#51A5DB');
 }
@@ -106,7 +107,7 @@ else{
 else if (to.name == "Profile"){
 
 store.state.homePageCheck=true
-if(store.state.boy){
+if(store.state.activeUser.sex=='man'){
 //boy
   r.style.setProperty('--bgcolor', '#51A5DB');
 }

@@ -201,7 +201,6 @@ const resetJoinForm=()=>{
     joinForm.age=18
     joinForm.sex="man"
     joinForm.guideAccept=false
-    joinForm.ppUrl=""
 }
 //check password is valid ?
 const passwdStrCheck=()=>{
@@ -436,6 +435,7 @@ const joinToFirestore =(userId)=>{
     twitter:"twitter",
     instagram:"instagram",
     bio:joinForm.bio,
+    ppUrl: joinForm.sex == 'man' ? 'https://firebasestorage.googleapis.com/v0/b/activitier-3d946.appspot.com/o/no-pp-boy?alt=media&token=3c408d1d-ea2f-425c-a6ed-b7415d858209' :' https://firebasestorage.googleapis.com/v0/b/activitier-3d946.appspot.com/o/no-pp-girl?alt=media&token=03698826-3b2b-4028-8475-3b315ecb8a7c',
     uid:userId,
     point:2,
     gamePosts:[],                                                                  

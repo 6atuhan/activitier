@@ -1,4 +1,5 @@
 <template>
+    <h1 class="text-white text-2xl w-fit text-outline font-Baloo-Regular select-none ml-4 visible md:invisible mt-4 ">FAQS</h1>
 
 <div class="container mx-auto">
     <!-- send q area -->

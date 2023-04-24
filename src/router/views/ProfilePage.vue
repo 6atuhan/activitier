@@ -1,18 +1,18 @@
 <template>
+    <h1 class="text-white text-2xl w-fit text-outline font-Baloo-Regular select-none ml-4 visible md:invisible mt-4 ">PROFILE</h1>
 <div v-if="store.state.activeUser != null " class="flex flex-col font-Quicksand py-2 md:flex-row px-2 mt-10 md:mt-0 mb-32" >
-
 <div class="container md:order-1 mx-auto w-full md:w-[768px] items-start justify-center flex flex-row flex-wrap gap-4">
 
-    <div class="card bg-blue-100  border border-black rounded-xl w-full p-4 shrink-0 relative flex flex-col md:flex-row gap-2 justify-center items-center">
-        <h3  class="border z-40 h-[28px] border-black !font-Baloo-Regular bg-blue-100 rounded-xl absolute left-0 -top-3 px-4 ml-4 hover-anim !text-xl uppercase">{{ store.state.activeUser.name }}</h3>
+    <div class="card bg-[#8E6DFF]  border border-black rounded-xl w-full p-4 shrink-0 relative flex flex-col md:flex-row gap-2 justify-center items-center">
+        <h3  class="border z-40 h-[28px] border-black !font-Baloo-Regular bg-[#8E6DFF] rounded-xl absolute left-0 -top-3 px-4 ml-4 hover-anim !text-xl uppercase">{{ store.state.activeUser.name }}</h3>
 
 
 
 
-        <div id="bilgiler" class="bg-violet-300 w-full m-4 rounded-xl border border-black self-center flex flex-col gap-2 py-2 hover-anim">
+        <div id="bilgiler" class="bg-[#E6E6E6] w-full m-4 rounded-xl border border-black self-center flex flex-col gap-2 py-2 hover-anim">
             <div id="profile" class=" flex flex-col w-full gap-2 items-center justify-center px-2 ">
                 <div class="bg-white h-20 w-20 md:h-36 md:w-36 rounded-full border border-black text-center text-[36px]  overflow-hidden hover-shadow hover:-translate-x-0.5 hover:-translate-y-0.5 box-border cubic-bezier">
-                    <img src="/src/assets/logo-pp.png" class="object-cover	 h-20 w-20 md:h-36 md:w-36 	" alt="profilePhoto">
+                    <img :src="store.state.activeUser.ppUrl" class="object-cover	 h-20 w-20 md:h-36 md:w-36 	" alt="profilePhoto">
 
                 </div>
                <div class="w-fit flex items-center gap-5">
@@ -142,7 +142,7 @@
 </div>
 </div>
 
-<div v-show="editForm.edit" :class="isValidEditForm ? 'bg-black/50':'bg-red-500/50'" class="flex items-center justify-center  h-screen w-screen overflow-scroll overflow-x-hidden fixed top-0 left-0 z-[9999] "> 
+<div v-show="editForm.edit" :class="editForm.isValid ? 'bg-black/50':'bg-red-500/50'" class="flex items-center justify-center  h-screen w-screen overflow-scroll overflow-x-hidden fixed top-0 left-0 z-[9999] "> 
 
     <!-- editForm.edit area -->
 
@@ -174,8 +174,16 @@
         <input    v-model="editForm.twitter" autocomplete="off"   class="py-1 w-2/5 border outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black" id="twitter" placeholder="username" type="text" required/>
         
 
+        <!-- pp -->
+        <div class="profile-pic">
+              <label class="-label" for="file">
+                <span>Change Image</span>
+              </label>
+              <input id="file" type="file" @change="updatePhoto($event)"  accept="image/jpg, image/png, image/jpeg" />
+              <img :src="photo.tempUrl" id="output" width="200" />
+            </div>
          <!-- bio -->
-         <label for="bio" class="text-outline  h-full w-2/5 flex flex-col font-Baloo-Regular tracking-widest text-white" >bio :
+         <label for="bio" class="text-outline  h-1/2 w-2/5 flex flex-col font-Baloo-Regular tracking-widest text-white" >bio :
         <textarea v-model="editForm.bio" id="bio"   autocomplete="off"   class="py-1 h-full resize-none w-full border font-Quicksand outline-none focus:hover-shadow-full cubic-bezier border-black rounded-lg px-2 text-black"  placeholder="bio" >
             </textarea>
         </label>
@@ -195,17 +203,35 @@
     </form>
 </div>
 
+<div v-if="editForm.loading" class="bg-black/40 w-screen h-screen fixed top-0 left-0 z-[99999]">
+    <div class="w-full h-full flex items-center justify-center">
+        <img src="/src/assets/sm-logo.png" class="w-32 animate-spin" alt="">
+    </div>
+</div>
+
 </template>
 
 <script setup>
 import store from "/src/store";
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive } from "vue";
 import { doc, updateDoc } from "firebase/firestore";
 import {db} from "/src/firebase"
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+
+
+
+
+const photo= reactive({
+    url:null,
+    tempUrl:""
+})
+
+
+
+
 
 //#region variables
-//check editform inputs for edit form modal bg color
-const isValidEditForm = ref(true)
+
 //edit form 
 const editForm = reactive({
         edit:false,
@@ -215,7 +241,9 @@ const editForm = reactive({
         age:18,
         instagram:"",
         twitter:"",
-        bio:"",    
+        bio:"", 
+        isValid:true,
+        loading:false   
 
 })
 
@@ -246,6 +274,7 @@ const convertTime =(t)=>{
 //open edit modal and match with input and recent value
 const openEditBox =()=>{
     editForm.edit = true
+    photo.tempUrl=tempUser.ppUrl
     editForm.surname = tempUser.surname
     editForm.name = tempUser.name
     editForm.city = tempUser.city
@@ -262,12 +291,13 @@ const updateEdit=()=>{
     //check editForm
     if(editForm.name=="" || editForm.surname=="" || editForm.city=="" || editForm.instagram=="" || editForm.twitter=="" || editForm.bio=="" || editForm.age <= 17)
     {
-        isValidEditForm.value = false
+        editForm.isValid = false
         return false
     }
     else{
+        editForm.loading = true
         //check inputs is valid
-        isValidEditForm.value = true
+        editForm.isValid = true
         //updating temp user object for import to firebase
     tempUser.name=editForm.name
     tempUser.surname=editForm.surname
@@ -307,9 +337,42 @@ const updateRef = doc(db, "users", id);
 }).then(()=>{
     //update user on vuex 
     store.state.activeUser=tempUser
+    //update pp from firebase
+    updatePpFromFirebase()
 }
 )};                                                                                                                  
 
+//add and update pp photo
+const updatePhoto=(event)=>{
+
+
+  photo.tempUrl = URL.createObjectURL(event.target.files[0]);
+
+    photo.url=event.target.files[0]
+
+
+}
+
+const updatePpFromFirebase=()=>{
+    const storage = getStorage();
+    //ref(storage, 'uid');
+    const imageRef = ref(storage, store.state.activeUser.uid);
+    // 'file' comes from the Blob or File API
+    uploadBytes(imageRef, photo.url).then((snapshot) => {
+      getDownloadURL(imageRef).then((url)=>{
+        store.state.activeUser.ppUrl=url
+
+        updateDoc( doc(db, "users", store.state.activeUser.uid), {
+            ppUrl:url
+}).then(()=>{
+    editForm.loading = false
+
+}
+)
+})
+});
+
+}
 //#endregion
 
 
@@ -323,3 +386,52 @@ onMounted(()=>{
 })
 
 </script>
+
+<style scoped >
+.profile-pic {
+	 color: transparent;
+	 transition: all 0.3s ease;
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 position: relative;
+	 transition: all 0.3s ease;
+}
+ .profile-pic input {
+	 display: none;
+}
+ .profile-pic img {
+	 position: absolute;
+	 object-fit: cover;
+	 width: 165px;
+	 height: 165px;
+	 border-radius: 50%;
+	 z-index: 0;
+     border: black 1px solid;
+}
+ .profile-pic .-label {
+	 cursor: pointer;
+	 height: 165px;
+	 width: 165px;
+}
+ .profile-pic:hover .-label {
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 background-color: rgba(0, 0, 0, 0.8);
+	 z-index: 10000;
+	 color: #fafafa;
+	 transition: background-color 0.2s ease-in-out;
+	 border-radius: 100px;
+	 margin-bottom: 0;
+}
+ .profile-pic span {
+	 display: inline-flex;
+	 padding: 0.2em;
+	 height: 2em;
+}
+ body a:hover {
+	 text-decoration: none;
+}
+ 
+</style>

@@ -1,4 +1,6 @@
 <template>
+    <h1 class="text-white text-2xl w-fit text-outline font-Baloo-Regular select-none ml-4 visible md:invisible mt-4 ">GUIDE</h1>
+
 <div class=" container mx-auto  my-4 pb-24 flex flex-col justify-center items-center gap-5"> 
     <!-- #1 join  -->
     <div class=" w-11/12  md:min-w-[700px] md:max-w-[1000px]    md:mx-auto text-3xl !mx-2 px-2 py-4 pb-10 bg-[#81F275] border  border-black text-center rounded-lg text-white "> 
