@@ -344,10 +344,7 @@ const updateRef = doc(db, "users", id);
 
 //add and update pp photo
 const updatePhoto=(event)=>{
-
-
-  photo.tempUrl = URL.createObjectURL(event.target.files[0]);
-
+    photo.tempUrl = URL.createObjectURL(event.target.files[0]);
     photo.url=event.target.files[0]
 
 

@@ -1,6 +1,6 @@
 <template>
 <!-- ADD CARD -->
-<div v-show="store.state.addPost"  class=" bg-black h-screen w-screen overflow-scroll overflow-x-hidden fixed top-0 left-0 z-[9999] ">
+<div v-show="store.state.addPost" :class="addPost.isValid ? 'bg-black':'bg-red-950'" class="  h-screen w-screen overflow-scroll overflow-x-hidden fixed top-0 left-0 z-[9999] ">
 <div  @click="store.state.addPost = false" class="button hover:bg-red-500 bg-red-700 w-fit text-white fixed top-2 right-2">X</div>
     <div :class="store.state.boy ? 'bg-[#51A5DB]':'bg-[#E6686F]'" class=" my-8 flex mx-auto flex-row md:flex-nowrap flex-wrap gap-1 !cursor-default p-4 border border-black rounded-lg w-full md:w-[800px] h-[800px] md:h-[400px] ">
 <!-- LEFT AREA        -->
@@ -129,7 +129,7 @@
                 </label>
             </div>
 
-            <div @click="postGame" class="button bg-purple-700 w-fit m-4 ml-auto">
+            <div @click="checkAddPostForm" class="button bg-purple-700 w-fit m-4 ml-auto">
                  Post
             </div>
         </div>
@@ -145,7 +145,7 @@ import { doc,collection, addDoc,updateDoc } from "firebase/firestore";
 //#region variables
 //add post form
 const addPost = reactive({
-    selectedGame:"",
+    selectedGame:"other",
     note:"",
     activeTags:[],
     player:"1p",
@@ -154,6 +154,7 @@ const addPost = reactive({
     time: "",
     city:"",
     state:"",
+    isValid:true
     
 })
 
@@ -174,8 +175,17 @@ const resetAddPostForm=()=>{
     addPost.city=""
     addPost.state=""
     tempAddGameId=""
-
-
+}
+//checking addpost form is valid
+const checkAddPostForm=()=>{
+    if(addPost.selectedGame == "" || addPost.note=="" || addPost.player==""|| addPost.date==""|| addPost.city==""|| addPost.state=="") {
+        addPost.isValid=false
+        return
+    }
+    else{
+        addPost.isValid=true
+        postGame()
+    }
 }
 //#endregion
 
