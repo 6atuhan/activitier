@@ -88,6 +88,8 @@
                 <thead class="text-xs uppercase bg-zinc-950 text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
+                        </th>
+                        <th scope="col" class="px-6 py-3">
                             GAME ID
                         </th>
                         <th scope="col" class="px-6 py-3">
@@ -103,6 +105,13 @@
                 </thead>
                 <tbody>
                     <tr  v-for="game in store.state.posts" :key="game" :class="game.isActive ?'bg-zinc-600' : 'bg-zinc-400'" class="text-white ">
+                        <th v-if="game.ownerUid == store.state.activeUser.uid" scope="row" class="px-6 select-all py-4 font-medium  whitespace-nowrap ">
+                            <div @click="deletePost(game.id)" class="button !px-0 !rounded-lg !py-0  !w-6 !h-6 bg-red-500 hover:bg-red-600 hover:scale-105 scale-100 flex items-center justify-center">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M15 2H9c-1.103 0-2 .897-2 2v2H3v2h2v12c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V8h2V6h-4V4c0-1.103-.897-2-2-2ZM9 4h6v2H9V4Zm8 16H7V8h10v12Z"></path>
+                                </svg>
+                            </div>
+                        </th>
                         <th v-if="game.ownerUid == store.state.activeUser.uid" scope="row" class="px-6 select-all py-4 font-medium  whitespace-nowrap ">
                             {{ game.id }}
                         </th>
@@ -203,6 +212,16 @@
     </form>
 </div>
 
+<!-- POST DELETE MODAL -->
+<div v-if="postDelete.open" class="w-screen h-screen fixed top-0 left-0 z-[99999] flex items-center justify-center bg-black/40">
+    <div class="w-64 px-4 h-32 mx-auto  flex items-center flex-row flex-wrap justify-center border border-black bg-white rounded-lg hover-shadow-full">
+        <h1 class="text-white text-outline text-lg basis-full text-center">Are you really want to delete ? </h1>
+        <div @click="    closeDeleteItem()" class="button basis-1/3 mx-2 text-center pb-2 hover:bg-red-600 bg-red-500 text-white">no</div>
+        <div @click="    deleteItem()" class="button basis-1/3 mx-2 text-center pb-2 hover:bg-green-600 bg-green-500 text-white">yes</div>
+    </div>
+</div>
+
+<!-- EDITFORM LOADING  -->
 <div v-if="editForm.loading" class="bg-black/40 w-screen h-screen fixed top-0 left-0 z-[99999]">
     <div class="w-full h-full flex items-center justify-center">
         <img src="/src/assets/sm-logo.png" class="w-32 animate-spin" alt="">
@@ -214,7 +233,7 @@
 <script setup>
 import store from "/src/store";
 import { computed, onMounted, reactive } from "vue";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc,deleteDoc,collection } from "firebase/firestore";
 import {db} from "/src/firebase"
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
@@ -245,6 +264,12 @@ const editForm = reactive({
         isValid:true,
         loading:false   
 
+})
+
+const postDelete=reactive({
+    open:false,
+    accept:false,
+    tempid:"",
 })
 
 //object to be edited from store.
@@ -316,6 +341,18 @@ const updateEdit=()=>{
 const discardEdit=()=>{
     editForm.edit=false
 }
+
+
+//delete post open modal 
+const deletePost = id =>{
+    postDelete.open = true
+    postDelete.tempid=id
+}
+//close delete post modal
+const closeDeleteItem = ()=>{
+    postDelete.open = false
+    postDelete.tempid=""
+}
 //#endregion
 
 
@@ -370,6 +407,11 @@ const updatePpFromFirebase=()=>{
 });
 
 }
+
+//delete post from firebase
+const deleteItem = () =>{									                                                           
+	deleteDoc(doc(collection(db, "posts"), postDelete.tempid)).then(closeDeleteItem())						                                         
+	}	
 //#endregion
 
 

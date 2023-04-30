@@ -20,18 +20,22 @@
     <svg v-if="post.selectedGame=='other' "  xmlns="http://www.w3.org/2000/svg" class="cubic-bezier"  fill="#fff" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="24" height="24"><path d="M19.5,9h-6c-2.481,0-4.5,2.019-4.5,4.5v6c0,2.481,2.019,4.5,4.5,4.5h6c2.481,0,4.5-2.019,4.5-4.5v-6c0-2.481-2.019-4.5-4.5-4.5Zm3.5,10.5c0,1.93-1.57,3.5-3.5,3.5h-6c-1.93,0-3.5-1.57-3.5-3.5v-6c0-1.93,1.57-3.5,3.5-3.5h6c1.93,0,3.5,1.57,3.5,3.5v6Zm-8-5.5c0,.552-.448,1-1,1s-1-.448-1-1,.448-1,1-1,1,.448,1,1Zm5,5c0,.552-.448,1-1,1s-1-.448-1-1,.448-1,1-1,1,.448,1,1ZM9,6c-.552,0-1-.448-1-1s.448-1,1-1,1,.448,1,1-.448,1-1,1Zm-4,2c.552,0,1,.448,1,1s-.448,1-1,1-1-.448-1-1,.448-1,1-1Zm1.913,8.585c-.097,.142-.253,.218-.413,.218-.097,0-.196-.028-.282-.087-.229-.157-.445-.337-.643-.534L1.333,11.939C-.422,10.185-.422,7.33,1.333,5.575L5.575,1.333C6.425,.482,7.556,.015,8.757,.015s2.333,.468,3.182,1.318l4.242,4.242c.197,.197,.377,.414,.534,.643,.155,.228,.098,.539-.131,.695-.225,.154-.537,.098-.695-.131-.121-.178-.261-.346-.415-.5L11.232,2.04c-1.322-1.322-3.628-1.323-4.95,0L2.04,6.282c-1.365,1.365-1.365,3.585,0,4.95l4.242,4.242c.154,.154,.322,.294,.5,.415,.228,.156,.286,.468,.13,.695Z"/></svg>
     </div>
 
-    <div id="harita" class="bg-[#EADDAC] h-full w-[222px] md:w-[192px] md:h-[174px] overflow-hidden   rounded-xl border border-black self-center flex items-center justify-start flex-col  box-border border-collapse hover-anim">
+    <div id="harita" class="bg-[#EADDAC] h-full relative w-[222px] md:w-[192px] md:h-[174px] overflow-hidden   rounded-xl border border-black self-center flex items-center justify-start flex-col  box-border border-collapse ">
 
-            <img class="w-full h-[90%] object-cover  m-0 p-0  transition-all border-b border-black rounded-t-lg " src="/src/assets/google-map.png" alt="">
-            <div class="flex items-center justify-center w-full font-Baloo-Regular text-sm select-none">
-                <p class="text-ellipsis w-1/2 overflow-hidden text-left px-2">
-                    {{ post.city }}
-                </p>
+            <img class="w-full h-full absolute top-0 left-0 z-0 object-cover  m-0 p-0  transition-all border-b border-black rounded-t-lg " src="/src/assets/google-map.png" alt="">
+            <div class="flex items-center flex-col justify-center group  w-full z-10 cursor-pointer h-full font-Baloo-Regular select-none">
+                <span class="text-ellipsis w-full h-[50%] group-hover:-translate-y-3/4 transition-all bg-[#EADDAC] border-b border-black overflow-hidden flex items-center justify-center group-hover:items-end">
+                 <p class="mx-4 w-full text-center text-base text-white text-outline lowercase">
+                     {{ post.city }}
+                 </p>
+                </span>
 
-                <p class="text-ellipsis w-1/2 overflow-hidden text-right px-2">
+                <span class="text-ellipsis w-full h-[50%] group-hover:translate-y-3/4 transition-all bg-[#EADDAC] border-t border-black overflow-hidden flex items-center justify-center group-hover:items-start">
 
-                    {{ post.state }}
-                </p>
+                 <p class="mx-4 w-full text-center text-base text-white text-outline lowercase">
+                     {{ post.state }}
+                 </p>
+                </span>
             </div>
             
             

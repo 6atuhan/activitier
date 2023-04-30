@@ -178,7 +178,7 @@ const resetAddPostForm=()=>{
 }
 //checking addpost form is valid
 const checkAddPostForm=()=>{
-    if(addPost.selectedGame == "" || addPost.note=="" || addPost.player==""|| addPost.date==""|| addPost.city==""|| addPost.state=="") {
+    if(addPost.selectedGame == "" || addPost.note=="" || addPost.player==""|| addPost.date==""|| addPost.city==""|| addPost.state=="" || addPost.state.length>=12 || addPost.city.length>=12 ) {
         addPost.isValid=false
         return
     }
