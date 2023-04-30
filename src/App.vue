@@ -12,43 +12,6 @@ import FooterComp from './components/FooterComp.vue';
 import HeaderComp from './components/HeaderComp.vue';
 import store from "/src/store"
 import router from "/src/router"
-import {db} from '/src/firebase'
-import { onMounted } from 'vue';
-import {  onSnapshot ,collection, query, orderBy} from "firebase/firestore";
-
-
-onMounted(()=>{
-
-const siraliPosts = query (collection(db, "posts"), orderBy("isActive", "desc"));
-onSnapshot(siraliPosts, (querySnapshot) => {                                                                
-	 const veriler = [];                                                                                  
-	 querySnapshot.forEach((doc) => {                                                                    
-                                                           
-       const cekilenVeri = 
-       {                                                                                
-        id:doc.id,                                                                                       
-        selectedGame : doc.data().selectedGame,
-        note : doc.data().note,
-        activeTags : doc.data().activeTags,
-        player : doc.data().player,                                                                             
-        date : doc.data().date,
-        location:doc.data().location,
-        city:doc.data().city,
-        state:doc.data().state,
-        isActive : doc.data().isActive,
-        time:doc.data().time,
-        ownerUid:doc.data().ownerUid,
-        ownerName:doc.data().ownerName,
-        ownerPoint:doc.data().ownerPoint,
-        ownerPpUrl:doc.data().ownerPpUrl,                                                                             
-        }                                                                                                
-        veriler.push(cekilenVeri)                                                                                                                                                
-	 });                                                                                                 
-  store.state.posts=veriler                                                   
-
-  console.log(  store.state.posts)  
-});                                      
-})
 
 
 

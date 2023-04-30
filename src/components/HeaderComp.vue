@@ -80,7 +80,6 @@ import { getAuth,signOut  } from "firebase/auth";
 import router from "/src/router"
 
 //#region variables
-const auth = getAuth();
 const logOut=ref(false)
 
 //#endregion
@@ -108,9 +107,6 @@ if(auth.currentUser !=null){
 
 
 //#region Firebase Functions
-
-                                                                                                             
-
 //#endregion
 
 

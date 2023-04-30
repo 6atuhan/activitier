@@ -233,9 +233,11 @@
 <script setup>
 import store from "/src/store";
 import { computed, onMounted, reactive } from "vue";
-import { doc, updateDoc,deleteDoc,collection } from "firebase/firestore";
+import { doc, updateDoc,deleteDoc,collection, onSnapshot , query, orderBy } from "firebase/firestore";
 import {db} from "/src/firebase"
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+
+
 
 
 
@@ -353,6 +355,7 @@ const closeDeleteItem = ()=>{
     postDelete.open = false
     postDelete.tempid=""
 }
+
 //#endregion
 
 
@@ -410,8 +413,24 @@ const updatePpFromFirebase=()=>{
 
 //delete post from firebase
 const deleteItem = () =>{									                                                           
-	deleteDoc(doc(collection(db, "posts"), postDelete.tempid)).then(closeDeleteItem())						                                         
+	deleteDoc(doc(collection(db, "posts"), postDelete.tempid)).then(deleteFromProfile())						                                         
 	}	
+
+
+    //delete in profile from "users"
+const deleteFromProfile=()=>{
+
+const q= collection(db, "users")
+const id = store.state.activeUser.uid
+
+var gamePostsTemp = store.state.activeUser.gamePosts
+gamePostsTemp = gamePostsTemp.filter(post => post != postDelete.tempid)
+                                                                                             
+updateDoc(doc(q,id), {						                                           
+  gamePosts : gamePostsTemp								                                             
+}).then(closeDeleteItem());
+
+}
 //#endregion
 
 
@@ -421,6 +440,39 @@ onMounted(()=>{
     document.getElementById('bio').addEventListener('input', function(e){
     this.value = this.value.replace(/\n/g,'')
         } )   
+
+
+    //pull datas from firebase
+    
+const siraliPosts = query (collection(db, "posts"), orderBy("isActive", "desc"));
+onSnapshot(siraliPosts, (querySnapshot) => {                                                                
+	 const veriler = [];                                                                                  
+	 querySnapshot.forEach((doc) => {                                                                    
+                                                           
+       const cekilenVeri = 
+       {                                                                                
+        id:doc.id,                                                                                       
+        selectedGame : doc.data().selectedGame,
+        note : doc.data().note,
+        activeTags : doc.data().activeTags,
+        player : doc.data().player,                                                                             
+        date : doc.data().date,
+        location:doc.data().location,
+        city:doc.data().city,
+        state:doc.data().state,
+        isActive : doc.data().isActive,
+        time:doc.data().time,
+        ownerUid:doc.data().ownerUid,
+        ownerName:doc.data().ownerName,
+        ownerPoint:doc.data().ownerPoint,
+        ownerPpUrl:doc.data().ownerPpUrl,                                                                             
+        }                                                                                                
+        veriler.push(cekilenVeri)                                                                                                                                                
+	 });                                                                                                 
+  store.state.posts=veriler                                                   
+
+  console.log(  store.state.posts)  
+});                                         
                 
 })
 
