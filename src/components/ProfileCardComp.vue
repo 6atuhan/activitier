@@ -10,8 +10,13 @@
                             </div>
                         </div>
 
+
                         <div>
                             <div id="name-score" class="flex flex-row items-center justify-between">
+                                <!-- premium -->
+<div  :class="store.state.activeUser.isPremium ? 'saturate-100' : 'saturate-0'" class="select-none">
+<img class="w-4" src="/src/assets/logo-pp.png" alt="">
+</div>
                                 <p class="font-bold">
                                     {{ store.state.activeUser.name }}
                                   <span class="uppercase">  {{ store.state.activeUser.surname[0] }}.</span>
