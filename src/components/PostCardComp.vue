@@ -99,7 +99,7 @@ import store from '/src/store';
 
 import {db} from "/src/firebase"
 import { doc,getDoc, updateDoc ,getFirestore,arrayUnion} from "firebase/firestore";
-import { getDatabase, ref, onValue, push  } from "firebase/database";
+import { getDatabase, ref, get, push  } from "firebase/database";
 
 
 //#region variables
@@ -217,6 +217,7 @@ const addMessageGroup=()=>{
         //all pushing is done -> update activeuser on vuex and go message
            updateUserState()
            router.push("message")
+
         }).catch((error)=>{
            console.error('karşı da hata :>> ', error);
         })
@@ -227,13 +228,13 @@ const addMessageGroup=()=>{
         
         })
         }
-        else
+        else if(store.state.activeUser.messageGroups.length >= 1)
         {
             //check usernames in all groups
         store.state.activeUser.messageGroups.forEach(element => {
             console.log('element :>> ', element);
             const groupCounter = ref(db, 'messages/groups/' + element );
-            onValue(groupCounter, (snapshot) => {
+            get(groupCounter,).then( (snapshot) => {
                   const data = snapshot.val();
             // users match (active and target) user
             if((data.users[0] == store.state.activeUser.uid && data.users[1] == store.state.messageUser.ownerUid) || (data.users[1] == store.state.activeUser.uid && data.users[0] == store.state.messageUser.ownerUid))
