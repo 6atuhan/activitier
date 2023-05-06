@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-
+import { getDatabase } from "firebase/database";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
@@ -17,7 +17,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 
-
+// Initialize Realtime Database and get a reference to the service
+const database = getDatabase(app);
+export {database}
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);

@@ -8,9 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueuse/core": "^10.1.0",
     "chart.js": "^4.2.1",
     "firebase": "^9.19.1",
-    "vue": "^3.2.25",
+    "vue": "^3.2.36",
     "vue-router": "^4.1.6",
     "vuex": "^4.0.2"
   },

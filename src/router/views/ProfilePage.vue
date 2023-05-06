@@ -422,7 +422,7 @@ const deleteItem = () =>{
 	}	
 
 
-    //delete in profile from "users"
+//delete in profile from "users"
 const deleteFromProfile=()=>{
 
 const q= collection(db, "users")
@@ -449,7 +449,7 @@ onMounted(()=>{
 
     //pull datas from firebase
     
-const siraliPosts = query (collection(db, "posts"), orderBy("isActive", "desc"));
+const siraliPosts = query (collection(db, "posts"), orderBy("time","desc"));
 onSnapshot(siraliPosts, (querySnapshot) => {                                                                
 	 const veriler = [];                                                                                  
 	 querySnapshot.forEach((doc) => {                                                                    

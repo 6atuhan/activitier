@@ -80,7 +80,7 @@
 
     </div>
     <div id="buttons" class="flex absolute -bottom-6 right-0 w-full gap-2 items-center justify-end px-2">
-        <div @click="goMessage" class="bg-blue-300 hover:bg-blue-500 group font-bold cursor-pointer select-none text-xl border border-black w-8 h-8 text-center rounded-lg hover-anim">
+        <div @click="goMessage(post)" class="bg-blue-300 hover:bg-blue-500 group font-bold cursor-pointer select-none text-xl border border-black w-8 h-8 text-center rounded-lg hover-anim">
             <svg class="group-hover:fill-white mx-auto mt-1" fill="#000" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="20" height="20"><path d="M19,1H5A5.006,5.006,0,0,0,0,6V18a5.006,5.006,0,0,0,5,5H19a5.006,5.006,0,0,0,5-5V6A5.006,5.006,0,0,0,19,1ZM5,3H19a3,3,0,0,1,2.78,1.887l-7.658,7.659a3.007,3.007,0,0,1-4.244,0L2.22,4.887A3,3,0,0,1,5,3ZM19,21H5a3,3,0,0,1-3-3V7.5L8.464,13.96a5.007,5.007,0,0,0,7.072,0L22,7.5V18A3,3,0,0,1,19,21Z"/></svg>
 
         </div>
@@ -96,7 +96,18 @@
 import { computed } from "vue";
 import router from "/src/router"
 import store from '/src/store';
+
+import {db} from "/src/firebase"
+import { doc,getDoc, updateDoc ,getFirestore,arrayUnion} from "firebase/firestore";
+import { getDatabase, ref, onValue, push ,serverTimestamp } from "firebase/database";
+
+
 //#region variables
+
+//pull object from explore page
+defineProps({
+posts:Object
+})
 
 //#endregion
 
@@ -106,13 +117,48 @@ import store from '/src/store';
 
 
 
-//pull object from explore page
-defineProps({
-posts:Object
-})
+
+/*
+MESSAGE LOGIC : 
+    -Already added active user to temp (vuex state)
+1- add target user to temp (uid ...)
+2- add to id  messageGroups on firebase
+    2a- check messageGroups is empty ? on firestore
+        2a.1- if empty push new group to RealtimeDatabase
+        2a.2- .then() push RtDb id to messageGroups on Firestore users/uid
+        2a.3- .then() push RtDb id to target user same as active user.
+        2a.4- update activeuser via Firestore
+        2a.5- go message page.
+    2b- messageGroups is not empty ?
+        2b.1- check all groupId->users
+        2b.2- if/ users matches the active and target users id -> pass
+        2b.3- not/ create new Group via RtDb-> push and update on Firestore and vuex
+*/
+
+/*
+    --REALTIME DATABASE--
+    |
+    |- messages
+    |   |- groups
+    |   |   |- group1id
+    |   |   |   |- messages
+    |   |   |   |- users
+    |   |   |   |   |- user.uid
+    |   |   |   |   |- user.uid
+    |   |   |
+    |   |   |- group2id
+    |   |   |   |- messages
+    |   |   |   |- users
+    |   |   |   |   |- user.uid
+    |   |   |   |   |- user.uid
+    |   |   |   
+
+*/
+
 //go message page
-const goMessage=()=>{
-router.push("message")
+const goMessage=(user)=>{
+    store.state.messageUser=user
+    addMessageGroup()    
 }
 
 //#endregion
@@ -121,8 +167,138 @@ router.push("message")
 
 //#region Firebase Functions
 
-                                                                                                             
+//updating user from vuex via firestore
+const updateUserState =()=>{
+    const docRef = doc(db, "users", store.state.activeUser.uid);
 
+getDoc(docRef).then(docSnap => {
+ if (docSnap.exists()) {
+//save entered user to vuex and go profile page.
+    store.state.activeUser=docSnap.data()
+if(store.state.activeUser != null)
+   console.log("Document data:", docSnap.data());
+ } else {
+    console.log("No such document!");
+ }
+})
+}
+                                                                                                  
+//create message group via RealtimeDatabase and push messageGroups field on Firestore
+const addMessageGroup=()=>{
+    const db = getDatabase();
+
+    //check messageGroups is empty and create group on RtDb and push Fs
+    if(store.state.activeUser.messageGroups == [] || store.state.activeUser.messageGroups.length === 0 ||store.state.activeUser.messageGroups == null || store.state.activeUser.messageGroups == [""] || store.state.activeUser.messageGroups == undefined ){
+              
+        const db = getDatabase();
+        // item for pushing to RtDb 
+        const setItemTemp = {
+        users:[store.state.activeUser.uid,store.state.messageUser.ownerUid],
+        messages:[{
+            content:"",
+            sender:"",
+            date:serverTimestamp()
+            }
+        ]
+        }
+        //create group on RtDb
+        push(ref(db, 'messages/groups/'),setItemTemp).then(data=>{
+        const db = getFirestore()
+        var key = data.key
+        var userRef = doc ( db,"users",store.state.activeUser.uid)
+        //push id to messageGroups on Fs (activeUser)
+        updateDoc(userRef,{
+        messageGroups: arrayUnion(key)
+        })
+        .then(() => {
+           console.log("Başarılı!");
+           var msguserRef = doc ( db,"users",store.state.messageUser.ownerUid);
+        //push id to messageGroups on Fs (targetUser)
+           updateDoc(msguserRef,{
+        messageGroups: arrayUnion(key)
+        }).then(()=>{
+           console.log('karşı da eklendi :>> ');
+        //all pushing is done -> update activeuser on vuex and go message
+           updateUserState()
+           router.push("message")
+        }).catch((error)=>{
+           console.error('karşı da hata :>> ', error);
+        })
+        })
+        .catch((error) => {
+        console.error("Hata:", error);
+        });
+        
+        })
+        }
+        else
+        {
+            //check usernames in all groups
+        store.state.activeUser.messageGroups.forEach(element => {
+            console.log('element :>> ', element);
+            const groupCounter = ref(db, 'messages/groups/' + element );
+            onValue(groupCounter, (snapshot) => {
+                  const data = snapshot.val();
+            // users match (active and target) user
+            if((data.users[0] == store.state.activeUser.uid && data.users[1] == store.state.messageUser.ownerUid) || (data.users[1] == store.state.activeUser.uid && data.users[0] == store.state.messageUser.ownerUid))
+                {
+                    console.log('BÖYLE Bİ GRUP VAR BU İKİ KİŞİ ARASINDA :>> ');
+                    //update active user on vuex and go message 
+                    updateUserState()
+                    router.push("message")
+
+                }
+            else
+            // usernames do not match in all groups  
+        {
+        const db = getDatabase();
+                
+        // item for pushing to RtDb 
+        const setItemTemp = {
+        users:[store.state.activeUser.uid,store.state.messageUser.ownerUid],
+        messages:[{
+            content:"",
+            sender:"",
+            date:serverTimestamp()
+        }
+        ]
+        }
+        //create group on RtDb
+        push(ref(db, 'messages/groups/'),setItemTemp).then(data=>{
+            const db = getFirestore()
+            var key = data.key
+            var userRef = doc ( db,"users",store.state.activeUser.uid)
+        //push id to messageGroups on Fs (activeUser)
+            updateDoc(userRef,{
+                messageGroups: arrayUnion(key)
+                })
+                .then(() => {
+                    console.log("Başarılı!");
+                    var msguserRef = doc ( db,"users",store.state.messageUser.ownerUid);
+        //push id to messageGroups on Fs (targetUser)
+                    updateDoc(msguserRef,{
+                messageGroups: arrayUnion(key)
+                }).then(()=>{
+                    console.log('karşı da eklendi :>> ');
+        //all pushing is done -> update activeuser on vuex and go message
+                    updateUserState()
+                    router.push("message")
+                }).catch((error)=>{
+                    console.error('karşı da hata :>> ', error);
+                })
+                })
+                .catch((error) => {
+                console.error("Hata:", error);
+                });
+
+            })
+ 
+        }
+    });
+
+});
+}
+}
 //#endregion
 
 

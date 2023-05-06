@@ -48,7 +48,7 @@ r.style.setProperty('--bgcolor', '#09090b');
 }
 else if (to.name == "Login"){
 store.state.homePageCheck=false
-r.style.setProperty('--bgcolor', '#DF2760');
+r.style.setProperty('--bgcolor', '#2E3332');
 
 }
 else if (to.name == "HastagTw"){

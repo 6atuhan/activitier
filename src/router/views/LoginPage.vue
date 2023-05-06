@@ -162,8 +162,8 @@ import {db} from "/src/firebase"
 //#region variables
 //enter form variables
 const enterForm=reactive({
-    email:"",
-    password:""
+    email:"qwe@qwe.com",
+    password:"qweqwe"
 })
 //join form variables
 const joinForm = reactive({
@@ -367,7 +367,7 @@ const checkEnterForm=(form)=>{
     setTimeout(() => {
             operation.success=false
             const docRef = doc(db, "users", user.uid);
-                const docSnap =  getDoc(docRef);
+
                 getDoc(docRef).then(docSnap => {
                  if (docSnap.exists()) {
 //save entered user to vuex and go profile page.
@@ -439,7 +439,8 @@ const joinToFirestore =(userId)=>{
     uid:userId,
     isPremium:false,
     point:2,
-    gamePosts:[],                                                                  
+    gamePosts:[],
+    messageGroups:null,                                                                  
 	});                                                  
 }
              

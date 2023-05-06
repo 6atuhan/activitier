@@ -5,7 +5,9 @@ const store = createStore({
         boy :true,
         addPost:false,
         posts:[],
-        activeUser:null
+        activeUser:null,
+        messageUser:null,
+        messages:[]
     },
 
 

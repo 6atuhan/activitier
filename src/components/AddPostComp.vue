@@ -141,7 +141,7 @@
 import store from "/src/store"
 import { onMounted,  reactive } from 'vue';
 import {db} from '/src/firebase'
-import { doc,collection, addDoc,updateDoc } from "firebase/firestore"; 
+import { doc,collection, addDoc,updateDoc,serverTimestamp } from "firebase/firestore"; 
 //#region variables
 //add post form
 const addPost = reactive({
@@ -207,7 +207,7 @@ const postGame =()=>{
         city:addPost.city,
         state:addPost.state,
         isActive : true,
-        time:currentTime,
+        time:serverTimestamp(),
         ownerUid:store.state.activeUser.uid,
         ownerName:store.state.activeUser.name,
         ownerPoint:store.state.activeUser.point,
