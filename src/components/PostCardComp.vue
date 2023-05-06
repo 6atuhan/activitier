@@ -1,5 +1,5 @@
 <template>
-<div v-for="post in posts" :key="post.id" :class="post.isActive ? 'opacity-100' : 'opacity-30 pointer-events-none cursor-not-allowed select-none '"   class=" bg-[#E25031] mb-4 border border-black rounded-xl h-[400px] w-64 md:h-52 md:w-[480px] p-4 shrink-0 relative flex flex-col md:flex-row gap-2 justify-center items-center ">
+<div v-for="post in posts" :key="post.id" :class="{ 'saturate-100 order-2': post.isActive, 'order-3 !saturate-0 pointer-events-none cursor-not-allowed select-none': !post.isActive, 'saturate-200 opacity-70 order-1 pointer-events-none cursor-not-allowed select-none ': post.ownerUid == store.state.activeUser.uid, 'saturate-100 order-2': post.ownerUid != store.state.activeUser.uid }"  class=" bg-[#E25031] mb-4 border border-black rounded-xl h-[400px] w-64 md:h-52 md:w-[480px] p-4 shrink-0 relative flex flex-col md:flex-row gap-2 justify-center items-center ">
     <div  class=" font-Quicksand  z-50  button text-white !py-0 bg-[#EADDAC]  absolute left-0 -top-3 ml-4 flex items-center justify-center gap-2 ">
         {{ post.selectedGame }}
         <div  :class="post.isActive ? 'bg-green-600':'bg-pink-600'" class="button w-4 h-4 p-0   "></div>
@@ -23,14 +23,14 @@
     <div id="harita" class="bg-[#EADDAC] h-full relative w-[222px] md:w-[192px] md:h-[174px] overflow-hidden   rounded-xl border border-black self-center flex items-center justify-start flex-col  box-border border-collapse ">
 
             <img class="w-full h-full absolute top-0 left-0 z-0 object-cover  m-0 p-0  transition-all border-b border-black rounded-t-lg " src="/src/assets/google-map.png" alt="">
-            <div class="flex items-center flex-col justify-center group  w-full z-10 cursor-pointer h-full font-Baloo-Regular select-none">
-                <span class="text-ellipsis w-full h-[50%] group-hover:-translate-y-3/4 transition-all bg-[#EADDAC] border-b border-black overflow-hidden flex items-center justify-center group-hover:items-end">
+            <div class="flex items-center flex-col justify-center group  w-full z-10 cursor-pointer h-full font-Baloo-Regular select-none ">
+                <span class="text-ellipsis w-full h-[50%] group-hover:-translate-y-3/4 transition-all bg-[#EADDAC]/50  border-b border-black overflow-hidden flex items-center justify-center group-hover:items-end">
                  <p class="mx-4 w-full text-center text-base text-white text-outline lowercase">
                      {{ post.city }}
                  </p>
                 </span>
 
-                <span class="text-ellipsis w-full h-[50%] group-hover:translate-y-3/4 transition-all bg-[#EADDAC] border-t border-black overflow-hidden flex items-center justify-center group-hover:items-start">
+                <span class="text-ellipsis w-full h-[50%] group-hover:translate-y-3/4 transition-all bg-[#EADDAC]/50  border-t border-black overflow-hidden flex items-center justify-center group-hover:items-start">
 
                  <p class="mx-4 w-full text-center text-base text-white text-outline lowercase">
                      {{ post.state }}
@@ -79,8 +79,8 @@
 
 
     </div>
-    <div id="buttons" class="flex absolute -bottom-6 right-0 w-full gap-2 items-center justify-end px-2">
-        <div @click="goMessage(post)" class="bg-blue-300 hover:bg-blue-500 group font-bold cursor-pointer select-none text-xl border border-black w-8 h-8 text-center rounded-lg hover-anim">
+    <div v-if="post.ownerUid != store.state.activeUser.uid" id="buttons" class="flex absolute -bottom-6 right-0 w-full gap-2 items-center justify-end px-2">
+        <div   @click="goMessage(post)" class="bg-blue-300 hover:bg-blue-500 group font-bold cursor-pointer select-none text-xl border border-black w-8 h-8 text-center rounded-lg hover-anim">
             <svg class="group-hover:fill-white mx-auto mt-1" fill="#000" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="20" height="20"><path d="M19,1H5A5.006,5.006,0,0,0,0,6V18a5.006,5.006,0,0,0,5,5H19a5.006,5.006,0,0,0,5-5V6A5.006,5.006,0,0,0,19,1ZM5,3H19a3,3,0,0,1,2.78,1.887l-7.658,7.659a3.007,3.007,0,0,1-4.244,0L2.22,4.887A3,3,0,0,1,5,3ZM19,21H5a3,3,0,0,1-3-3V7.5L8.464,13.96a5.007,5.007,0,0,0,7.072,0L22,7.5V18A3,3,0,0,1,19,21Z"/></svg>
 
         </div>

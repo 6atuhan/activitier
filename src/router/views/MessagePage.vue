@@ -27,9 +27,9 @@
                     </div>
                 </div>
                 <!-- messages -->
-                <div class="  h-2/3 md:h-full  md:w-4/5  flex flex-col justify-between">
+                <div id="messageUlCont" class="  h-2/3 md:h-full  md:w-4/5  flex flex-col justify-between">
 
-                        <ul class=" md:mt-20 md:my-0 my-10 mt-10 border-b flex items-start flex-col justify-start w-full h-full overflow-x-hidden px-10  ">
+                        <ul id="messagesUl" class=" md:mt-20 md:my-0 my-10 mt-10 border-b flex items-start flex-col justify-start w-full h-full overflow-x-hidden px-10  ">
                             <li v-for="msg in msgvars.messages " :key="msg.date" :class="msg.sender == store.state.activeUser.uid ? 'self-end' : 'self-start'">{{ msg.content }}</li>
                         </ul>
                         <!-- type message -->
@@ -73,7 +73,7 @@
 
 </template>
 <script setup>
-import {onMounted, reactive } from "vue"
+import {onMounted, onUpdated, reactive } from "vue"
 import store from '/src/store';
 
 import {db} from "/src/firebase"
@@ -96,7 +96,7 @@ const msgvars=reactive({
 const sendMessage = ()=>{
     console.log('msgvars.message :>> ', msgvars.message);
     pushRealtimeDatabase()
-
+    document.querySelector("#messagesUl").scrollTop = document.querySelector("#messagesUl").scrollHeight 
     msgvars.message=""
 }
 //#endregion
@@ -119,12 +119,20 @@ const pushRealtimeDatabase = () =>{
                 console.log('error :>> ', error);
             })
 }
-                                                                                                             
+                        
+
+onUpdated(()=>{
+    //scroll down for messages
+    document.querySelector("#messagesUl").scrollTop = document.querySelector("#messagesUl").scrollHeight 
+
+})
+
 onMounted(()=>{
     const db = getDatabase();
     onValue(ref(db, 'messages/groups/' + store.state.messageGroupTemp + '/messages'), (snapshot) => {
         msgvars.messages = snapshot.val()
     })
+
 })
 //#endregion
 
