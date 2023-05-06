@@ -99,7 +99,7 @@ import store from '/src/store';
 
 import {db} from "/src/firebase"
 import { doc,getDoc, updateDoc ,getFirestore,arrayUnion} from "firebase/firestore";
-import { getDatabase, ref, onValue, push ,serverTimestamp } from "firebase/database";
+import { getDatabase, ref, onValue, push  } from "firebase/database";
 
 
 //#region variables
@@ -194,17 +194,13 @@ const addMessageGroup=()=>{
         // item for pushing to RtDb 
         const setItemTemp = {
         users:[store.state.activeUser.uid,store.state.messageUser.ownerUid],
-        messages:[{
-            content:"",
-            sender:"",
-            date:serverTimestamp()
-            }
-        ]
+        messages:null
         }
         //create group on RtDb
         push(ref(db, 'messages/groups/'),setItemTemp).then(data=>{
         const db = getFirestore()
         var key = data.key
+        store.state.messageGroupTemp=key
         var userRef = doc ( db,"users",store.state.activeUser.uid)
         //push id to messageGroups on Fs (activeUser)
         updateDoc(userRef,{
@@ -243,6 +239,7 @@ const addMessageGroup=()=>{
             if((data.users[0] == store.state.activeUser.uid && data.users[1] == store.state.messageUser.ownerUid) || (data.users[1] == store.state.activeUser.uid && data.users[0] == store.state.messageUser.ownerUid))
                 {
                     console.log('BÖYLE Bİ GRUP VAR BU İKİ KİŞİ ARASINDA :>> ');
+                    store.state.messageGroupTemp=element
                     //update active user on vuex and go message 
                     updateUserState()
                     router.push("message")
@@ -256,17 +253,13 @@ const addMessageGroup=()=>{
         // item for pushing to RtDb 
         const setItemTemp = {
         users:[store.state.activeUser.uid,store.state.messageUser.ownerUid],
-        messages:[{
-            content:"",
-            sender:"",
-            date:serverTimestamp()
-        }
-        ]
+        messages:null
         }
         //create group on RtDb
         push(ref(db, 'messages/groups/'),setItemTemp).then(data=>{
             const db = getFirestore()
             var key = data.key
+            store.state.messageGroupTemp=key
             var userRef = doc ( db,"users",store.state.activeUser.uid)
         //push id to messageGroups on Fs (activeUser)
             updateDoc(userRef,{

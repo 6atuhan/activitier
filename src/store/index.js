@@ -7,7 +7,8 @@ const store = createStore({
         posts:[],
         activeUser:null,
         messageUser:null,
-        messages:[]
+        messages:[],
+        messageGroupTemp:"",
     },
 
 

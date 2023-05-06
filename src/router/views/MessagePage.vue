@@ -30,7 +30,7 @@
                 <div class="  h-2/3 md:h-full  md:w-4/5  flex flex-col justify-between">
 
                         <ul class=" md:mt-20 md:my-0 my-10 mt-10 border-b flex items-start flex-col justify-start w-full h-full overflow-x-hidden px-10  ">
-                            <li v-for="i in 5 " :key="i">asdfasdf</li>
+                            <li v-for="msg in msgvars.messages " :key="msg.date" :class="msg.sender == store.state.activeUser.uid ? 'self-end' : 'self-start'">{{ msg.content }}</li>
                         </ul>
                         <!-- type message -->
                     <div class="text-area   shrink-0  flex flex-row relative overflow-hidden">
@@ -45,7 +45,7 @@
     </div>
 
      <!-- side menu  -->
-    <div class=" w-[300px] h-[450px]  bg-gradient-to-b from-blue-400 to-blue-100 rounded-lg">
+    <div class=" hidden w-[300px] h-[450px]  bg-gradient-to-b from-blue-400 to-blue-100 rounded-lg">
                 <div class="border border-black h-full w-full flex flex-col rounded-lg ">
                     <h1 class="text-white font-bold  border-b h-6 px-2 flex items-center justify-start gap-2 select-none"> <span><img src="/src/assets/sm-logo.png" class="w-5" alt=""></span>  Activitier <span class="font-thin">Messenger</span></h1>
                     <div class="profile border border-black bg-gradient-to-b from-blue-300 to-blue-100 h-28  m-4 mb-0 rounded-lg flex flex-row items-center just-start px-2 gap-2">
@@ -73,23 +73,30 @@
 
 </template>
 <script setup>
-import store from "/src/store"
-import {reactive } from "vue"
+import {onMounted, reactive } from "vue"
+import store from '/src/store';
+
+import {db} from "/src/firebase"
+import { getDatabase, ref,push ,onValue,serverTimestamp } from "firebase/database";
+
+
 
 
 //#region variables
 //variable for cat anim.
 const msgvars=reactive({
     cat_isPress:false,
-    message:""
+    message:"",
+    messages:[]
 })
 //#endregion
-
 
 
 //#region Functions
 const sendMessage = ()=>{
     console.log('msgvars.message :>> ', msgvars.message);
+    pushRealtimeDatabase()
+
     msgvars.message=""
 }
 //#endregion
@@ -98,8 +105,27 @@ const sendMessage = ()=>{
 
 //#region Firebase Functions
 
-                                                                                                             
+const pushRealtimeDatabase = () =>{
+    console.log('store.state.messageGroupTemp :>> ', store.state.messageGroupTemp);
+    const db = getDatabase();
 
+    push(ref(db, 'messages/groups/'+store.state.messageGroupTemp+"/messages/"),{
+            content:msgvars.message,
+            sender:store.state.activeUser.uid,
+            date:serverTimestamp()
+            }).then(()=>{
+                console.log('yollandı :>> ');
+            }).catch(error=>{
+                console.log('error :>> ', error);
+            })
+}
+                                                                                                             
+onMounted(()=>{
+    const db = getDatabase();
+    onValue(ref(db, 'messages/groups/' + store.state.messageGroupTemp + '/messages'), (snapshot) => {
+        msgvars.messages = snapshot.val()
+    })
+})
 //#endregion
 
 
