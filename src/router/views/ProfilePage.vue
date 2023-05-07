@@ -399,8 +399,20 @@ const updatePpFromFirebase=()=>{
     const storage = getStorage();
     //ref(storage, 'uid');
     const imageRef = ref(storage, store.state.activeUser.uid);
-
-    if(photo.url != null ){
+    if(photo.url == null){
+        //UPDATE pphoto - name - poin IN ALL GAME POSTS
+        store.state.activeUser.gamePosts.forEach(element => {
+            const updatePostPPref = doc(db, "posts", element);
+            updateDoc(updatePostPPref, {
+                  ownerName: store.state.activeUser.name,
+                  ownerPoint: store.state.activeUser.point,
+    
+            });
+        });
+        editForm.loading = false
+    
+    }
+    else if(photo.url != null ){
 
         // 'file' comes from the Blob or File API
         uploadBytes(imageRef, photo.url).then((snapshot) => {
