@@ -212,7 +212,8 @@ const postGame =()=>{
         ownerName:store.state.activeUser.name,
         ownerPoint:store.state.activeUser.point,
         ownerPpUrl:store.state.activeUser.ppUrl,
-        ownerSex:store.state.activeUser.sex
+        ownerSex:store.state.activeUser.sex,
+        playmateUid:""
 
         
     }).then(function(docRef) {

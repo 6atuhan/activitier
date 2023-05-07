@@ -35,7 +35,7 @@
                         <!-- type message -->
                     <div class="text-area   shrink-0  flex flex-row relative overflow-hidden">
                         <input @keydown.enter="sendMessage" type="text" @keydown="msgvars.cat_isPress =true"  @keyup="msgvars.cat_isPress=false" v-model="msgvars.message" class="w-full pr-16 resize-none m-4 border-black border rounded-r-xl rounded-tl-xl   focus:outline-0 p-4">
-                        <div :class="msgvars.cat_isPress ? '-translate-x-1 -translate-y-1' :'' " class="duration-700 absolute -bottom-7 -right-8  w-28 h-28 cursor-pointer hover:-translate-x-1 hover:-translate-y-1 cubic-bezier">
+                        <div @click="sendMessage" :class="msgvars.cat_isPress ? '-translate-x-1 -translate-y-1' :'' " class="duration-700 absolute -bottom-7 -right-8  w-28 h-28 cursor-pointer hover:-translate-x-1 hover:-translate-y-1 cubic-bezier">
                             <img v-if="!msgvars.cat_isPress" class="closed-cat  drop-shadow-xl cubic-bezier !z-50" src="/src/assets/cat_closed.png" alt="">
                             <img v-if="msgvars.cat_isPress" class="opened-cat   drop-shadow-xl cubic-bezier !z-50" src="/src/assets/cat_opened.png" alt="">
                         </div>
@@ -94,10 +94,15 @@ const msgvars=reactive({
 
 //#region Functions
 const sendMessage = ()=>{
+if( msgvars.message == ""){
+    return false
+}
+else if( msgvars.message !=""){
     console.log('msgvars.message :>> ', msgvars.message);
     pushRealtimeDatabase()
     document.querySelector("#messagesUl").scrollTop = document.querySelector("#messagesUl").scrollHeight 
     msgvars.message=""
+}
 }
 //#endregion
 
