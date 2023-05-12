@@ -3,13 +3,24 @@
 <div v-if="store.state.activeUser != null " class="flex flex-col font-Quicksand py-2 md:flex-row px-2 mt-10 md:mt-0 mb-32" >
 <div class="container md:order-1 mx-auto w-full md:w-[768px] items-start justify-center flex flex-row flex-wrap gap-4">
 
-    <div class="card bg-[#8E6DFF]  border border-black rounded-xl w-full p-4 shrink-0 relative flex flex-col md:flex-row gap-2 justify-center items-center">
-        <h3  class="border z-40 h-[28px] border-black !font-Baloo-Regular bg-[#8E6DFF] rounded-xl absolute left-0 -top-3 px-4 ml-4 hover-anim !text-xl uppercase">{{ store.state.activeUser.name }}</h3>
+    <div class="card bg-[#8E6DFF]  border border-black rounded-xl w-full p-4 shrink-0 flex-wrap relative flex flex-col md:flex-row gap-2 justify-center items-center">
+        <h3 @click="tabs.profile=true , tabs.requests=false" :class="{'hover-shadow-full saturate-200 text-white text-outline': tabs.profile , 'saturate-0':tabs.requests}" class="border hover:saturate-100 cursor-pointer z-40 h-[28px] border-black !font-Baloo-Regular bg-[#8E6DFF] rounded-xl absolute left-0 -top-3 px-4 ml-4 hover-anim !text-xl uppercase">{{ store.state.activeUser.name }}</h3>
+        <h3 @click="tabs.profile=false , tabs.requests=true" :class="{'hover-shadow-full saturate-200 text-white text-outline': tabs.requests , 'saturate-0':tabs.profile}" class="border hover:saturate-100 cursor-pointer z-40 h-[28px] border-black !font-Baloo-Regular bg-[#8E6DFF] rounded-xl absolute right-0 -top-3 px-4 mr-4 hover-anim !text-xl uppercase">REQUESTS</h3>
 
+        <!-- REQUESTS TAB -->
 
+        <div v-if="tabs.requests"  class="mx-auto w-full h-fit">
+            <div   class="bg-[#E6E6E6] shrink-0 w-full mx-auto m-4 rounded-xl border border-black self-center hover-anim ">
+            <h1 class="text-center w-full font-bold text-2xl text-white text-outline tracking-widest select-none my-8">GAME REQUESTS</h1>
+            </div>
+            <div   id="istekler" class="bg-[#E6E6E6] mx-auto shrink-0 w-full m-4 px-4 rounded-xl border pt-10 border-black self-center flex flex-row flex-wrap items-center justify-center max-h-[500px] py-2 hover-anim gap-6 overflow-y-scroll overflow-x-hidden">
+                    <ReqCardComp v-for="i in 7" :key="i"></ReqCardComp>
+            </div>
 
-
-        <div id="bilgiler" class="bg-[#E6E6E6] w-full m-4 rounded-xl border border-black self-center flex flex-col gap-2 py-2 hover-anim">
+        </div>
+        
+        <!-- PROFILE TAB -->
+        <div  v-if="tabs.profile"  id="bilgiler" class="bg-[#E6E6E6] w-full m-4 mx-auto rounded-xl border border-black self-center flex flex-col gap-2 py-2 hover-anim">
             <div id="profile" class=" flex flex-col w-full gap-2 items-center justify-center px-2 ">
                 <!-- premium -->
                 <div  :class="store.state.activeUser.isPremium ? 'saturate-100 animate-bounce' : 'saturate-0'">
@@ -141,7 +152,7 @@
             </div>
         </div>
 <!-- EDİT BUTTONS -->
-        <div @click="openEditBox"  class=" button  z-30 !px-0 items-center justify-center flex !py-0 rounded-full  bg-zinc-300 hover:bg-zinc-500 cursor-pointer h-8 w-8 absolute -top-4 right-16 md:top-6 md:-right-4 group ">
+        <div v-if="tabs.profile"  @click="openEditBox"  class=" button  z-30 !px-0 items-center justify-center flex !py-0 rounded-full  bg-zinc-300 hover:bg-zinc-500 cursor-pointer h-8 w-8 absolute top-12 right-12  md:top-6 md:-right-4 group ">
         <svg class="group-hover:fill-white" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M5.035 12.705a7.08 7.08 0 0 1 0-1.41L3.206 9.232l2-3.464 2.701.553a6.99 6.99 0 0 1 1.222-.707L10 3h4l.872 2.614c.432.195.841.432 1.221.707l2.701-.553 2 3.464-1.829 2.063a7.078 7.078 0 0 1 0 1.41l1.83 2.063-2 3.464-2.702-.553c-.38.275-.789.512-1.221.707L14 21h-4l-.871-2.614a6.991 6.991 0 0 1-1.222-.707l-2.7.553-2.001-3.464 1.83-2.063Z"></path>
   <path d="M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path>
@@ -242,6 +253,7 @@ import { doc, updateDoc,deleteDoc,collection, onSnapshot , query, orderBy } from
 import {db} from "/src/firebase"
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
+import ReqCardComp from "/src/components/ReqCardComp.vue"
 
 
 
@@ -253,7 +265,11 @@ const photo= reactive({
 })
 
 
+const tabs=reactive({
+    profile:true,
+    requests:false,
 
+})
 
 
 //#region variables

@@ -2,7 +2,7 @@
 <div class="container overflow-x-hidden !font-Quicksand font-bold w-full md:!flex-nowrap flex-wrap-reverse mx-auto p-4  flex flex-row  justify-center overflow-hidden gap-4">
             
     <!-- messagebox -->
-    <div class=" relative w-full h-[450px] border border-black bg-gradient-to-b from-blue-400 px-4 via-white rounded-lg to-blue-100  flex flex-col flex-wrap ">
+    <div class=" relative w-full max-w-4xl h-[450px] border border-black bg-gradient-to-b from-blue-400 px-4 via-white rounded-lg to-blue-100  flex flex-col flex-wrap ">
 
         <!-- messagebox header -->
                 <div class="text-xl h-6 w-full font-bold text-white px-4 absolute -ml-4 border-zinc-300 border-b flex flex-row items-center justify-between lowercase"><p>{{store.state.messageUser.ownerName}} - {{ store.state.messageUser.selectedGame }}</p> 
@@ -29,9 +29,11 @@
                 <!-- messages -->
                 <div id="messageUlCont" class="  h-2/3 md:h-full  md:w-4/5  flex flex-col justify-between">
 
-                        <ul id="messagesUl" class=" md:mt-20 md:my-0 my-10 mt-10 border-b flex items-start flex-col justify-start w-full h-full overflow-x-hidden px-10  ">
-                            <li v-for="msg in msgvars.messages " :key="msg.date" :class="msg.sender == store.state.activeUser.uid ? 'self-end' : 'self-start'">{{ msg.content }}</li>
-                        </ul>
+                        <ul id="messagesUl" class="0 md:mt-10 md:my-0 my-10 mt-10 border-b flex items-start flex-col justify-start w-full h-full overflow-x-hidden px-10  ">
+                            <li v-for="msg in msgvars.messages " :key="msg.date" :class="{ 'self-end before:content-[] ' : msg.sender == store.state.activeUser.uid , 'self-start after:content-[] ' : msg.sender != store.state.activeUser.uid}" class="before:content-['-'] before:mr-1 after:content-['-'] after:ml-1">
+                                    {{ msg.content }} 
+                            </li>
+                        </ul>                                                       
                         <!-- type message -->
                     <div class="text-area   shrink-0  flex flex-row relative overflow-hidden">
                         <input @keydown.enter="sendMessage" type="text" @keydown="msgvars.cat_isPress =true"  @keyup="msgvars.cat_isPress=false" v-model="msgvars.message" class="w-full pr-16 resize-none m-4 border-black border rounded-r-xl rounded-tl-xl   focus:outline-0 p-4">
