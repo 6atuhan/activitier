@@ -4,17 +4,17 @@
 <div class="container md:order-1 mx-auto w-full md:w-[768px] items-start justify-center flex flex-row flex-wrap gap-4">
 
     <div class="card bg-[#8E6DFF]  border border-black rounded-xl w-full p-4 shrink-0 flex-wrap relative flex flex-col md:flex-row gap-2 justify-center items-center">
-        <h3 @click="tabs.profile=true , tabs.requests=false" :class="{'hover-shadow-full saturate-200 text-white text-outline': tabs.profile , 'saturate-0':tabs.requests}" class="border hover:saturate-100 cursor-pointer z-40 h-[28px] border-black !font-Baloo-Regular bg-[#8E6DFF] rounded-xl absolute left-0 -top-3 px-4 ml-4 hover-anim !text-xl uppercase">{{ store.state.activeUser.name }}</h3>
-        <h3 @click="tabs.profile=false , tabs.requests=true" :class="{'hover-shadow-full saturate-200 text-white text-outline': tabs.requests , 'saturate-0':tabs.profile}" class="border hover:saturate-100 cursor-pointer z-40 h-[28px] border-black !font-Baloo-Regular bg-[#8E6DFF] rounded-xl absolute right-0 -top-3 px-4 mr-4 hover-anim !text-xl uppercase">REQUESTS</h3>
+        <h3 @click="tabs.profile=true , tabs.history=false" :class="{'hover-shadow-full saturate-200 text-white text-outline': tabs.profile , 'saturate-0':tabs.history}" class="border hover:saturate-100 cursor-pointer z-40 h-[28px] border-black !font-Baloo-Regular bg-[#8E6DFF] rounded-xl absolute left-0 -top-3 px-4 ml-4 hover-anim !text-xl uppercase">{{ store.state.activeUser.name }}</h3>
+        <h3 @click="tabs.profile=false , tabs.history=true" :class="{'hover-shadow-full saturate-200 text-white text-outline': tabs.history , 'saturate-0':tabs.profile}" class="border hover:saturate-100 cursor-pointer z-40 h-[28px] border-black !font-Baloo-Regular bg-[#8E6DFF] rounded-xl absolute right-0 -top-3 px-4 mr-4 hover-anim !text-xl uppercase">history</h3>
 
-        <!-- REQUESTS TAB -->
+        <!-- history TAB -->
 
-        <div v-if="tabs.requests"  class="mx-auto w-full h-fit">
-            <div   class="bg-[#E6E6E6] shrink-0 w-full mx-auto m-4 rounded-xl border border-black self-center hover-anim ">
-            <h1 class="text-center w-full font-bold text-2xl text-white text-outline tracking-widest select-none my-8">GAME REQUESTS</h1>
+        <div v-if="tabs.history"  class="mx-auto w-full h-fit">
+            <div   class="bg-[#E6E6E6] shrink-0 w-full mx-auto m-4 uppercase rounded-xl border border-black self-center hover-anim ">
+            <h1 class="text-center w-full font-bold text-2xl text-white text-outline tracking-widest select-none my-8">GAME history</h1>
             </div>
-            <div   id="istekler" class="bg-[#E6E6E6] mx-auto shrink-0 w-full m-4 px-4 rounded-xl border pt-10 border-black self-center flex flex-row flex-wrap items-center justify-center max-h-[500px] py-2 hover-anim gap-6 overflow-y-scroll overflow-x-hidden">
-                    <ReqCardComp v-for="i in 7" :key="i"></ReqCardComp>
+            <div    class="bg-[#E6E6E6] mx-auto shrink-0 w-full m-4 px-4 rounded-xl border pt-10 border-black self-center flex flex-row flex-wrap items-center justify-center max-h-[500px] py-2 hover-anim gap-6 overflow-y-scroll overflow-x-hidden">
+                    <HistoryCardComp v-for="i in 7" :key="i"></HistoryCardComp>
             </div>
 
         </div>
@@ -253,7 +253,7 @@ import { doc, updateDoc,deleteDoc,collection, onSnapshot , query, orderBy } from
 import {db} from "/src/firebase"
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
-import ReqCardComp from "/src/components/ReqCardComp.vue"
+import HistoryCardComp from "/src/components/HistoryCardComp.vue"
 
 
 
@@ -267,7 +267,7 @@ const photo= reactive({
 
 const tabs=reactive({
     profile:true,
-    requests:false,
+    history:false,
 
 })
 
