@@ -188,7 +188,7 @@ const addMessageGroup=()=>{
     const db = getDatabase();
 
     //check messageGroups is empty and create group on RtDb and push Fs
-    if(store.state.activeUser.messageGroups == [] || store.state.activeUser.messageGroups.length === 0 ||store.state.activeUser.messageGroups == null || store.state.activeUser.messageGroups == [""] || store.state.activeUser.messageGroups == undefined ){
+    if(store.state.activeUser.messageGroups == [] || store.state.activeUser.messageGroups.length == 0 ||store.state.activeUser.messageGroups == null || store.state.activeUser.messageGroups == [""] || store.state.activeUser.messageGroups == undefined ){
               
         const db = getDatabase();
         // item for pushing to RtDb 

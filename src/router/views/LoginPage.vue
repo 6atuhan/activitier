@@ -440,8 +440,8 @@ const joinToFirestore =(userId)=>{
     isPremium:false,
     point:2,
     gamePosts:[],
-    messageGroups:null,
-    gameReqs:[],                                                                  
+    messageGroups:[],
+    gameHistory:[],                                                                  
 	});                                                  
 }
              

@@ -18,10 +18,9 @@
                             <img :src="store.state.messageUser.ownerPpUrl" class="object-cover w-full h-full" alt="">
                         </div>
                     </div>
-                    <div class="mx-2 lowercase visible md:invisible">{{ store.state.messageUser.city }}/{{ store.state.messageUser.state }}</div>
-                    <!-- OPEN ACCEPT MODAL -->
-                    <div @click="openAcceptModal" class="button bg-green-500 text-white hover:bg-green-600">Accept</div>
-                    <div v-if="msgpage.accept" class="w-full h-full bg-black/40 fixed top-0 left-0 z-[99999] flex items-center justify-center">
+                    <!-- OPEN GAME MODAL -->
+                    <div @click="msgpage.accept = true" class="button bg-[#C89AE9]  text-white hover:bg-[#8253a3]">info</div>
+                    <div @click="msgpage.accept = false" v-if="msgpage.accept" class="w-full h-full bg-black/40 fixed top-0 left-0 z-[99999] flex items-center justify-center">
                     <div  class="w-96  bg-[#C89AE9] border p-4 border-black rounded-lg hover-shadow-full">
                         <h1 class="text-outline text-white my-4 text-center text-2xl">Are you sure you will accept?</h1>
                         <div class="border border-black rounded-lg bg-[#F0D3EF] hover-anim w-full p-2 select-none flex items-center justify-center flex-col ">
@@ -56,10 +55,6 @@
                             </div>
                             </div>
 
-                        </div>
-                        <div class="flex items-center justify-evenly my-4">
-                            <div @click="msgpage.accept=false"  class="button text-white bg-red-500">no</div>
-                            <div @click="msgpage.accept=false"  class="button text-white bg-green-500">ok</div>
                         </div>
                     </div>
 
@@ -122,11 +117,9 @@
 <script setup>
 import {onMounted, onUpdated, reactive } from "vue"
 import store from '/src/store';
-
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import {db} from "/src/firebase"
 import { getDatabase, ref,push ,onValue,serverTimestamp } from "firebase/database";
-
-
 
 
 //#region variables
@@ -143,11 +136,6 @@ const msgpage=reactive({
 
 
 //#region Functions
-
-const openAcceptModal=()=>{
-    msgpage.accept=true
-    console.log('store.state.messageUser :>> ', store.state.messageUser);
-}
 
 const sendMessage = ()=>{
 if( msgpage.message == ""){
@@ -181,7 +169,6 @@ const pushRealtimeDatabase = () =>{
             })
 }
                         
-
 onUpdated(()=>{
     //scroll down for messages
     document.querySelector("#messagesUl").scrollTop = document.querySelector("#messagesUl").scrollHeight 
